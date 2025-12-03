@@ -215,6 +215,16 @@
                 </p>
             </div>
 
+            <!-- Intro Mascot - In Front of Card -->
+            <div class="mascot-wrapper" style="bottom: 40px; right: 40px; transform: scale(0.5); opacity: 0.85; z-index: 30;">
+                <div class="speech-bubble">Hi I am a mascot. My name is Now Choong. I like to play hide-n-seek. Spot me. Wink!</div>
+                <div class="bell bell-l"></div><div class="bell bell-r"></div><div class="bell-hammer"></div>
+                <div class="limb leg-l"></div><div class="limb leg-r"></div>
+                <div class="limb arm-l" style="transform: rotate(-140deg);"></div>
+                <div class="limb arm-r" style="transform: rotate(20deg);"></div>
+                <div class="clock-body"><div class="face-ring"><div class="glasses"><div class="lens"><div class="eye eye-normal"></div></div><div class="bridge"></div><div class="lens"><div class="eye eye-wink"></div></div></div><div class="mouth mouth-smile"></div></div></div>
+            </div>
+            
             <div class="footer-note text-slate-500">Created by: Kar Loon | Contact: +65 91860119</div>
         </div>
     </div>
@@ -247,6 +257,7 @@
                     </div>
                 </div>
             </div>
+            <div class="mascot-target" data-slide="summary-text"></div>
             <div class="footer-note">Created by: Kar Loon | Contact: +65 91860119</div>
         </div>
     </div>
@@ -267,6 +278,7 @@
                     <canvas id="summaryChart"></canvas>
                 </div>
             </div>
+            <div class="mascot-target" data-slide="summary-chart"></div>
             <div class="footer-note">Created by: Kar Loon | Contact: +65 91860119</div>
         </div>
     </div>
@@ -354,11 +366,11 @@
                                 <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-2">Nearby Land Trans. (psf ppr)</h4>
                                 <div class="grid grid-cols-2 gap-3">
                                     <div class="bg-slate-50 p-2 rounded border border-slate-200">
-                                        <div class="text-[10px] text-slate-500 leading-tight mb-1 truncate" title="${site.c1n}">${site.c1n}</div>
+                                        <div class="text-[10px] sm:text-xs text-slate-500 leading-tight mb-1 break-words hyphens-auto" title="${site.c1n}">${site.c1n}</div>
                                         <div class="text-sm font-bold text-slate-700">${site.c1p}</div>
                                     </div>
                                     <div class="bg-slate-50 p-2 rounded border border-slate-200">
-                                        <div class="text-[10px] text-slate-500 leading-tight mb-1 truncate" title="${site.c2n}">${site.c2n}</div>
+                                        <div class="text-[10px] sm:text-xs text-slate-500 leading-tight mb-1 break-words hyphens-auto" title="${site.c2n}">${site.c2n}</div>
                                         <div class="text-sm font-bold text-slate-700">${site.c2p}</div>
                                     </div>
                                 </div>
@@ -371,6 +383,7 @@
                                 </div>
                                 <img src="${site.img}" onerror="this.style.display='none'" alt="${site.name} Map">
                             </div>
+                            <div class="mascot-target" data-index="${index}"></div>
                         </div>
                         <div class="footer-note">Created by: Kar Loon | Contact: +65 91860119</div>
                     </div>
@@ -450,7 +463,6 @@
 
             const allSlides = document.querySelectorAll('.slide');
             allSlides.forEach((slide, index) => {
-                // Cleanup
                 const existing = slide.querySelectorAll('.mascot-wrapper');
                 existing.forEach(el => el.remove());
 
@@ -463,7 +475,7 @@
                 let isSummary2 = index === 2;
                 let isEnd = index === allSlides.length - 1;
 
-                // Default: Z-Index 30 (Front), Scale 0.5
+                // Default
                 wrapper.style.zIndex = '30';
                 wrapper.style.transform = 'scale(0.5)';
 
@@ -475,22 +487,18 @@
                     wrapper.style.bottom = '40px';
                     wrapper.style.right = '40px';
                     wrapper.style.opacity = '0.85';
-                    wrapper.style.transform = 'scale(0.5)'; // 50% smaller per request
                     slide.appendChild(wrapper);
                 } else if (isSummary1 || isSummary2 || isEnd) {
-                    // SAFE ZONES for special pages
+                    wrapper.style.transform = 'scale(0.5) rotate(0deg)';
                     if(isSummary1) {
                         wrapper.style.bottom = '20px';
                         wrapper.style.right = '40px';
-                        wrapper.style.transform = 'scale(0.4) rotate(-10deg)';
-                        wrapper.style.zIndex = '5'; // Behind text if overlaps
+                        wrapper.style.zIndex = '5';
                     } else if (isSummary2) {
                         wrapper.style.top = '10px';
                         wrapper.style.right = '10px';
-                        wrapper.style.transform = 'scale(0.4) rotate(15deg)';
                         wrapper.style.zIndex = '5';
                     } else {
-                        // End Page
                         wrapper.style.position = 'relative';
                         wrapper.style.transform = 'scale(0.75)';
                         const card = slide.querySelector('.content-card');
@@ -498,43 +506,40 @@
                     }
                     slide.appendChild(wrapper);
                 } else {
-                    // SITE SLIDES: PEEK FROM SCREEN EDGE
-                    // We pick an edge: Top, Bottom, Left, Right
+                    // SITE SLIDES: PEEK FROM EDGES (Strictly 30-100% visible)
+                    // Strategy: Pick an edge, position relative to that edge.
+                    // Offset from edge: -35px (50% hidden) to +30px (fully inside with margin)
+                    
                     const edges = ['top', 'bottom', 'left', 'right'];
                     const edge = edges[Math.floor(Math.random() * edges.length)];
                     
-                    // Random position along that edge (10% to 90%)
+                    // Random Z-Index (30 or 1)
+                    const isFront = Math.random() > 0.5;
+                    wrapper.style.zIndex = isFront ? '30' : '30'; // Force front for mobile visibility
+                    wrapper.style.position = 'absolute';
+
+                    const rot = Math.floor(Math.random() * 40) - 20;
+                    wrapper.style.transform = `rotate(${rot}deg) scale(0.5)`;
+
+                    // Position along the edge (10% to 90%)
                     const pos = Math.random() * 80 + 10; 
 
-                    // Random "Peek Amount" (-50px to 20px)
-                    // -50px = mostly hidden off screen
-                    // 20px = fully inside
-                    // Mascot height ~140px scaled 0.5 -> 70px. 
-                    // So -35px is half hidden.
-                    const peek = Math.floor(Math.random() * 80) - 50; 
-                    
+                    // Position perpendicular to edge (-30px to 10px)
+                    const peek = Math.floor(Math.random() * 40) - 30; 
+
                     if (edge === 'top') {
                         wrapper.style.top = peek + 'px';
                         wrapper.style.left = pos + '%';
-                        wrapper.style.transform = `scale(0.5) rotate(${Math.random()*20 - 10}deg)`;
                     } else if (edge === 'bottom') {
                         wrapper.style.bottom = peek + 'px';
                         wrapper.style.left = pos + '%';
-                        wrapper.style.transform = `scale(0.5) rotate(${Math.random()*20 - 10}deg)`;
                     } else if (edge === 'left') {
                         wrapper.style.left = peek + 'px';
                         wrapper.style.top = pos + '%';
-                        wrapper.style.transform = `scale(0.5) rotate(90deg)`;
                     } else if (edge === 'right') {
                         wrapper.style.right = peek + 'px';
                         wrapper.style.top = pos + '%';
-                        wrapper.style.transform = `scale(0.5) rotate(-90deg)`;
                     }
-                    
-                    // 50% Chance to be Behind (Z=1) if peeking, creates depth
-                    // BUT strictly visible if peek > 0. 
-                    // Safe logic: If peeking from side, always front. If top/bottom, can be behind.
-                    wrapper.style.zIndex = (edge === 'top' || edge === 'bottom') && Math.random() > 0.5 ? '1' : '30';
                     
                     slide.appendChild(wrapper);
                 }
@@ -557,7 +562,6 @@
                 if (mouth) mouth.className = `mouth ${mouths[Math.floor(Math.random()*mouths.length)]}`;
             });
 
-            // 4. ANIMATION OBSERVER
             const revealElements = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
