@@ -73,6 +73,21 @@
             flex-direction: column;
         }
 
+        /* --- ANIMATIONS (NEW) --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Stagger delays for nicer effect */
+        .delay-100 { transition-delay: 0.1s; }
+        .delay-200 { transition-delay: 0.2s; }
+        .delay-300 { transition-delay: 0.3s; }
+
         /* --- 3D CSS MASCOT: NOW CHOONG (CLOCK VER) --- */
         .mascot-wrapper {
             position: absolute;
@@ -81,6 +96,15 @@
             pointer-events: none; /* Let clicks pass through unless specifically interactive */
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             filter: drop-shadow(0 15px 10px rgba(0,0,0,0.3));
+            /* Mascot Entrance Animation */
+            opacity: 0;
+            animation: mascotPopIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 0.5s; /* Wait for slide content first */
+        }
+
+        @keyframes mascotPopIn {
+            0% { opacity: 0; transform: scale(0.5) translateY(20px); }
+            100% { opacity: 1; } /* Transform is handled inline by JS randomizer, so we just fade in */
         }
 
         /* 3D Parts */
@@ -195,7 +219,7 @@
                 <div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-secondary rounded-full blur-[120px]"></div>
             </div>
 
-            <div class="relative z-10 text-center px-4">
+            <div class="relative z-10 text-center px-4 reveal">
                 <div class="inline-block px-4 py-1 border border-cyan-400 rounded-full text-cyan-400 text-sm font-bold tracking-widest mb-6 animate-pulse">
                     MARKET UPDATE
                 </div>
@@ -223,11 +247,11 @@
     <!-- 2A. EXECUTIVE SUMMARY: KEY HIGHLIGHTS -->
     <div class="slide">
         <div class="content-card p-8 flex flex-col justify-center">
-            <h2 class="font-display text-4xl text-brand-dark mb-8 text-center md:text-left">Key Highlights</h2>
+            <h2 class="font-display text-4xl text-brand-dark mb-8 text-center md:text-left reveal">Key Highlights</h2>
             
             <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
                 <!-- Left: Text Points -->
-                <div class="w-full md:w-2/3 pr-0 md:pr-12">
+                <div class="w-full md:w-2/3 pr-0 md:pr-12 reveal delay-100">
                     <ul class="text-slate-600 text-sm md:text-base leading-relaxed space-y-4 list-disc pl-4 marker:text-brand-secondary">
                         <li>The overall private housing supply in the GLS programme for 1H2026 will be sustained at a high level of around <strong>9,200 units</strong>, similar to that in 2H2025.</li>
                         <li>The supply includes <strong>4,575</strong> private residential units to be tendered out via the Confirmed List. This is 43% higher than the average Confirmed List supply of around 3,190 units per GLS programme from 2021 to 2023. An additional <strong>4,610</strong> units will be made available via the Reserve List.</li>
@@ -237,7 +261,7 @@
                 </div>
 
                 <!-- Right: Stats Box -->
-                <div class="w-full md:w-1/3 flex flex-col gap-4">
+                <div class="w-full md:w-1/3 flex flex-col gap-4 reveal delay-200">
                     <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 text-center shadow-sm">
                         <div class="text-4xl font-black text-brand-primary">4,575</div>
                         <div class="text-xs font-bold text-slate-500 uppercase mt-1">Confirmed Units</div>
@@ -263,7 +287,7 @@
     <div class="slide">
         <!-- Added md:pr-32 to header container to reserve space for mascot -->
         <div class="content-card p-8 flex flex-col h-auto">
-            <div class="flex flex-col md:flex-row justify-between items-center mb-6 md:pr-32 relative z-20">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-6 md:pr-32 relative z-20 reveal">
                 <h2 class="font-display text-4xl text-brand-dark text-center md:text-left">Supply Breakdown</h2>
                 <!-- Legend -->
                 <div class="flex gap-4 mt-4 md:mt-0 text-xs md:text-sm font-bold uppercase">
@@ -273,7 +297,7 @@
                 </div>
             </div>
             
-            <div class="flex-grow bg-white rounded-xl p-4 shadow-inner flex items-center justify-center relative w-full h-[60vh]">
+            <div class="flex-grow bg-white rounded-xl p-4 shadow-inner flex items-center justify-center relative w-full h-[60vh] reveal delay-100">
                 <div class="chart-container w-full h-full">
                     <canvas id="summaryChart"></canvas>
                 </div>
@@ -321,7 +345,7 @@
             <div class="slide">
                 <div class="content-card p-6 md:p-10 flex flex-col md:flex-row gap-8">
                     <!-- Info Side -->
-                    <div class="w-full md:w-1/3 flex flex-col justify-center relative z-20">
+                    <div class="w-full md:w-1/3 flex flex-col justify-center relative z-20 reveal">
                         <div class="inline-block self-start px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border mb-4 ${badgeColor}">
                             ${site.list} List • ${site.type}
                         </div>
@@ -353,7 +377,7 @@
                     </div>
 
                     <!-- Map Side -->
-                    <div class="w-full md:w-2/3 relative z-10 flex flex-col justify-center">
+                    <div class="w-full md:w-2/3 relative z-10 flex flex-col justify-center reveal delay-100">
                         <div class="map-frame">
                             <div class="map-placeholder">
                                 <i class="fas fa-map-marked-alt text-4xl mb-2"></i>
@@ -374,9 +398,9 @@
     <div class="slide">
         <div class="content-card !bg-gradient-to-br !from-brand-primary !to-brand-secondary !text-white flex flex-col justify-center items-center text-center">
             <div class="mascot-target relative z-30 mb-8" data-slide="end"></div>
-            <h2 class="font-display text-5xl md:text-7xl font-black mb-6 drop-shadow-lg">STAY TUNED!</h2>
-            <p class="text-2xl font-light text-blue-100 max-w-xl">For more updates and detailed analysis on the Singapore Property Market.</p>
-            <div class="mt-12 bg-white/10 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/20">
+            <h2 class="font-display text-5xl md:text-7xl font-black mb-6 drop-shadow-lg reveal">STAY TUNED!</h2>
+            <p class="text-2xl font-light text-blue-100 max-w-xl reveal delay-100">For more updates and detailed analysis on the Singapore Property Market.</p>
+            <div class="mt-12 bg-white/10 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/20 reveal delay-200">
                 <p class="font-bold">Kar Loon</p>
                 <p class="opacity-80">+65 91860119</p>
             </div>
@@ -432,7 +456,8 @@
                         backgroundColor: [
                             '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', // Blue
                             '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', // Yellow
-                            '#9333EA', '#9333EA', '#9333EA' // Purple
+                            '#9333EA', '#9333EA', '#9333EA', // Purple
+                            '#FACC15' // Yellow (Reserve)
                         ],
                         borderRadius: 4
                     }]
@@ -532,9 +557,34 @@
                 eyeR.className = `eye ${eyes[Math.floor(Math.random()*eyes.length)]}`;
                 mouth.className = `mouth ${mouths[Math.floor(Math.random()*mouths.length)]}`;
 
+                // Animation Observer to trigger reveals
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if(entry.isIntersecting) {
+                            entry.target.classList.add('active');
+                            // If this element has specific delay classes, it handles itself
+                            // Special handling for mascot opacity if needed (using CSS animation mostly)
+                        }
+                    });
+                }, { threshold: 0.1 });
+
+                // Attach observer to revealed elements
+                // Note: The loop below does this generally, but here we just append the mascot.
                 target.parentNode.appendChild(wrapper);
                 target.remove();
             });
+
+            // General Observer for Scroll Animations
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if(entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            revealElements.forEach(el => observer.observe(el));
         });
     </script>
 </body>
