@@ -1,55 +1,452 @@
-import os
-from PIL import Image
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1H2026 GLS Programme Infographic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            dark: '#0F172A',
+                            primary: '#2563EB',
+                            secondary: '#06B6D4',
+                            accent: '#FACC15',
+                            light: '#F8FAFC'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
 
-def optimize_images(folder_path='.', max_width=1000, quality=85):
-    """
-    Resizes and compresses images in the folder to high-quality JPGs.
-    """
-    # Create output folder
-    output_folder = os.path.join(folder_path, 'optimized')
-    if not os.path.exists(output_folder):
-        os.makedirs(output_folder)
+    <style>
+        /* --- CORE STYLES --- */
+        body {
+            background-color: #0F172A;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
 
-    # supported extensions
-    extensions = ('.jpg', '.jpeg', '.png', '.webp')
+        /* Hide scrollbar for clean presentation */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0F172A; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
 
-    print(f"Processing images in: {os.path.abspath(folder_path)}")
-    print("-" * 30)
+        /* Slide Container */
+        .slide {
+            min-height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
 
-    for filename in os.listdir(folder_path):
-        if filename.lower().endswith(extensions) and filename != "optimize_images.py":
-            file_path = os.path.join(folder_path, filename)
+        /* Card Container for Content */
+        .content-card {
+            background: #F8FAFC;
+            width: 100%;
+            max-width: 1200px;
+            border-radius: 24px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            z-index: 10;
+            min-height: 700px; /* Consistent height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- 3D CSS MASCOT: NOW CHOONG (CLOCK VER) --- */
+        .mascot-wrapper {
+            position: absolute;
+            width: 120px;
+            height: 140px;
+            pointer-events: none; /* Let clicks pass through unless specifically interactive */
+            transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 15px 10px rgba(0,0,0,0.3));
+        }
+
+        /* 3D Parts */
+        .limb {
+            background: linear-gradient(90deg, #0D7A70, #18B0A2, #0D7A70);
+            position: absolute; border-radius: 20px; z-index: 1;
+            box-shadow: inset 0 -2px 5px rgba(0,0,0,0.3);
+        }
+        .leg-l { width: 12px; height: 26px; bottom: 0; left: 35px; }
+        .leg-r { width: 12px; height: 26px; bottom: 0; right: 35px; }
+        .arm-l { width: 10px; height: 35px; top: 65px; left: 10px; transform-origin: top center; }
+        .arm-r { width: 10px; height: 35px; top: 65px; right: 10px; transform-origin: top center; }
+
+        .bell {
+            width: 34px; height: 20px;
+            background: radial-gradient(circle at 30% 30%, #F5D0A9, #B46B3E, #8B4513);
+            border-radius: 40px 40px 0 0; position: absolute; top: 8px; z-index: 1;
+            box-shadow: 0 4px 4px rgba(0,0,0,0.3);
+        }
+        .bell-l { left: 15px; transform: rotate(-25deg); }
+        .bell-r { right: 15px; transform: rotate(25deg); }
+        .bell-hammer { width: 8px; height: 6px; background: #5A2E0C; position: absolute; top: 18px; left: 56px; border-radius: 2px; }
+
+        .clock-body {
+            width: 96px; height: 96px;
+            background: radial-gradient(circle at 35% 35%, #FFF8E7, #E5C99E, #C19A6B);
+            border-radius: 50%; position: absolute; bottom: 20px; left: 12px; z-index: 2;
+            border: 3px solid #FFF;
+            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2);
+        }
+
+        .face-ring {
+            position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px;
+            border-radius: 50%; border: 2px solid #22D3EE; background: #FDF6E3;
+            box-shadow: inset 2px 2px 8px rgba(0,0,0,0.1), 0 0 8px rgba(34, 211, 238, 0.6);
+        }
+
+        .glasses { position: absolute; top: 32px; width: 100%; display: flex; justify-content: center; gap: 4px; }
+        .lens {
+            width: 28px; height: 28px; border: 2px solid #5A3E2B; border-radius: 50%; position: relative;
+            background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 100%);
+        }
+        .bridge { width: 8px; height: 2px; background: #5A3E2B; margin-top: 13px; }
+
+        /* Expressions */
+        .eye { background: #333; border-radius: 50%; position: absolute; }
+        .eye-normal { width: 10px; height: 10px; top: 8px; left: 8px; }
+        .eye-wink { width: 12px; height: 4px; border-bottom: 3px solid #333; border-radius: 0; background: transparent; top: 8px; left: 7px; }
+        .eye-happy { width: 12px; height: 6px; border-top: 3px solid #333; border-radius: 50% 50% 0 0; background: transparent; top: 10px; left: 7px; }
+        
+        .mouth { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); }
+        .mouth-smile { width: 20px; height: 10px; border-bottom: 3px solid #333; border-radius: 0 0 20px 20px; }
+        .mouth-o { width: 12px; height: 12px; border: 3px solid #333; border-radius: 50%; background: #333; }
+
+        /* --- MAP CONTAINER --- */
+        .map-frame {
+            width: 100%;
+            height: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 8px solid white;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background-color: #e2e8f0;
+            position: relative;
+        }
+        .map-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+            position: relative;
+            z-index: 10;
+        }
+        .map-frame:hover img {
+            transform: scale(1.02);
+        }
+        .map-placeholder {
+            position: absolute; top:0; left:0; width:100%; height:100%;
+            display: flex; flex-direction: column; 
+            /* Align bottom right */
+            justify-content: flex-end; 
+            align-items: flex-end;
+            padding: 20px; /* Padding from the edge */
+            color: #cbd5e1; /* Subtle color */
+            z-index: 1;
+        }
+
+        /* Footer */
+        .footer-note {
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #94a3b8;
+            font-weight: 600;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 1. COVER PAGE -->
+    <div class="slide">
+        <div class="content-card !bg-[#0F172A] !text-white overflow-hidden flex flex-col justify-center items-center relative">
+            <!-- Background Decoration -->
+            <div class="absolute inset-0 opacity-20">
+                <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
+                <div class="absolute top-0 right-0 w-96 h-96 bg-brand-primary rounded-full blur-[120px]"></div>
+                <div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-secondary rounded-full blur-[120px]"></div>
+            </div>
+
+            <div class="relative z-10 text-center px-4">
+                <div class="inline-block px-4 py-1 border border-cyan-400 rounded-full text-cyan-400 text-sm font-bold tracking-widest mb-6 animate-pulse">
+                    MARKET UPDATE
+                </div>
+                <h1 class="font-display text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-blue-400 mb-6 drop-shadow-2xl">
+                    1H2026<br>GLS PROGRAMME
+                </h1>
+                <p class="font-sans text-xl md:text-2xl text-slate-300 font-light tracking-wide max-w-2xl mx-auto">
+                    A Comprehensive Guide to Residential & Mixed Development Sites
+                </p>
+            </div>
+
+            <!-- Intro Mascot -->
+            <div class="mascot-wrapper" style="bottom: 40px; right: 40px; transform: scale(1.5);">
+                <div class="bell bell-l"></div><div class="bell bell-r"></div><div class="bell-hammer"></div>
+                <div class="limb leg-l"></div><div class="limb leg-r"></div>
+                <div class="limb arm-l" style="transform: rotate(-140deg);"></div> <!-- Waving -->
+                <div class="limb arm-r" style="transform: rotate(20deg);"></div>
+                <div class="clock-body"><div class="face-ring"><div class="glasses"><div class="lens"><div class="eye eye-normal"></div></div><div class="bridge"></div><div class="lens"><div class="eye eye-wink"></div></div></div><div class="mouth mouth-smile"></div></div></div>
+            </div>
             
-            try:
-                with Image.open(file_path) as img:
-                    # Convert to RGB (removes transparency if PNG)
-                    if img.mode in ("RGBA", "P"):
-                        img = img.convert("RGB")
+            <div class="footer-note text-slate-500">Created by: Kar Loon | Contact: +65 91860119</div>
+        </div>
+    </div>
 
-                    # Calculate new height to maintain aspect ratio
-                    width_percent = (max_width / float(img.size[0]))
-                    
-                    # Only resize if the image is larger than max_width
-                    if width_percent < 1:
-                        new_height = int((float(img.size[1]) * float(width_percent)))
-                        img = img.resize((max_width, new_height), Image.Resampling.LANCZOS)
-                        print(f"Resized: {filename}")
-                    else:
-                        print(f"Original size kept: {filename}")
+    <!-- 2. EXECUTIVE SUMMARY (DATA VIZ) -->
+    <div class="slide">
+        <div class="content-card p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="flex flex-col justify-center">
+                <h2 class="font-display text-4xl text-brand-dark mb-4">Executive Summary</h2>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                    The 1H2026 GLS Programme introduces a significant supply of private housing. The <span class="font-bold text-brand-primary">Confirmed List</span> offers immediate launch sites, while the <span class="font-bold text-yellow-600">Reserve List</span> provides flexibility for developers to trigger sites based on market demand.
+                </p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-blue-50 p-4 rounded-xl border border-blue-100">
+                        <div class="text-3xl font-black text-brand-primary">4,575</div>
+                        <div class="text-sm font-bold text-slate-500 uppercase">Confirmed Units</div>
+                    </div>
+                    <div class="bg-yellow-50 p-4 rounded-xl border border-yellow-100">
+                        <div class="text-3xl font-black text-yellow-600">4,745</div>
+                        <div class="text-sm font-bold text-slate-500 uppercase">Reserve Units</div>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-xl p-4 shadow-inner flex items-center justify-center relative">
+                <div class="chart-container w-full h-full max-h-[600px]">
+                    <canvas id="summaryChart"></canvas>
+                </div>
+                <!-- Mascot -->
+                <div class="mascot-target" data-slide="summary"></div>
+            </div>
+            <div class="footer-note">Created by: Kar Loon | Contact: +65 91860119</div>
+        </div>
+    </div>
 
-                    # Save as JPG to the 'optimized' folder
-                    # We force the extension to .jpg to match your HTML code
-                    new_filename = os.path.splitext(filename)[0] + ".jpg"
-                    output_path = os.path.join(output_folder, new_filename)
-                    
-                    img.save(output_path, "JPEG", quality=quality, optimize=True)
-                    print(f"Saved: {new_filename} (Quality: {quality})")
+    <!-- TEMPLATE FOR SITE SLIDES -->
+    <script>
+        // Data for all sites
+        const sites = [
+            // CONFIRMED LIST
+            { name: "Holland Plain", type: "Residential", list: "Confirmed", units: 280, area: "1.57 ha", date: "Feb 2026", img: "holland plain.jpg", color: "blue" },
+            { name: "River Valley Green (Parcel C)", type: "Residential", list: "Confirmed", units: 470, area: "1.15 ha", date: "Apr 2026", img: "river valley green parcal c.jpg", color: "blue" },
+            { name: "Peck Hay Road", type: "Residential", list: "Confirmed", units: 315, area: "0.55 ha", date: "Apr 2026", img: "Peck Hay Road.jpg", color: "blue" },
+            { name: "Berlayar Drive", type: "Residential", list: "Confirmed", units: 415, area: "2.54 ha", date: "May 2026", img: "berlayar drive.jpg", color: "blue" },
+            { name: "Canberra Drive (EC)", type: "EC", list: "Confirmed", units: 185, area: "1.16 ha", date: "May 2026", img: "canberra drive EC.jpg", color: "blue" },
+            { name: "New Upper Changi Road", type: "Residential", list: "Confirmed", units: 1040, area: "3.16 ha", date: "May 2026", img: "New Upper Changi Road.jpg", color: "blue" },
+            { name: "Lorong Puntong", type: "Residential", list: "Confirmed", units: 140, area: "0.43 ha", date: "Jun 2026", img: "Lorong Puntong (Sin ming).jpg", color: "blue" },
+            { name: "Sembawang Drive (EC)", type: "EC", list: "Confirmed", units: 450, area: "1.29 ha", date: "Jun 2026", img: "sembawang drive EC.jpg", color: "blue" },
+            { name: "Bayshore Drive", type: "Mixed Use", list: "Confirmed", units: 1280, area: "5.74 ha", date: "Mar 2026", img: "bayshore drive.jpg", color: "blue" },
+            
+            // RESERVE LIST
+            { name: "Marina Gardens Lane", type: "Residential", list: "Reserve", units: 390, area: "0.60 ha", date: "Available", img: "Marina Gardens Lane.jpg", color: "yellow" },
+            { name: "Media Circle", type: "Residential", list: "Reserve", units: 520, area: "0.57 ha", date: "Available", img: "Media Circle.jpg", color: "yellow" },
+            { name: "Media Circle (Parcel B)", type: "Residential", list: "Reserve", units: 500, area: "1.00 ha", date: "Available", img: "Media Circle (Parcel B).jpg", color: "yellow" },
+            { name: "Cross Street", type: "Residential", list: "Reserve", units: 315, area: "0.23 ha", date: "Available", img: "Cross Street.jpg", color: "yellow" },
+            { name: "Morrison Lane", type: "Residential", list: "Reserve", units: 200, area: "0.66 ha", date: "Feb 2026", img: "Morrison Lane.jpg", color: "yellow" },
+            { name: "Kitchener Link", type: "Residential", list: "Reserve", units: 135, area: "0.39 ha", date: "Jun 2026", img: "Kitchener Link.jpg", color: "yellow" },
+            { name: "Marina Gardens Crescent", type: "White Site", list: "Reserve", units: 775, area: "1.73 ha", date: "Available", img: "Marina Gardens White Site.jpg", color: "purple" },
+            { name: "Woodlands Avenue 2", type: "White Site", list: "Reserve", units: 440, area: "2.75 ha", date: "Available", img: "woodlands avenue 2.jpg", color: "purple" },
+            { name: "Town Hall Link", type: "White Site", list: "Reserve", units: 1200, area: "3.72 ha", date: "Mar 2026", img: "town hall link.jpg", color: "purple" },
+            { name: "Telok Ayer Street", type: "Hotel / Residential", list: "Reserve", units: 135, area: "0.42 ha", date: "Dec 2025", img: "Telok Ayer Street.jpg", color: "yellow" }
+        ];
 
-            except Exception as e:
-                print(f"Error processing {filename}: {e}")
+        // Generate Slides
+        sites.forEach((site, index) => {
+            const badgeColor = site.list === "Confirmed" ? "bg-blue-100 text-brand-primary border-blue-200" : (site.type === "White Site" ? "bg-purple-100 text-purple-600 border-purple-200" : "bg-yellow-100 text-yellow-700 border-yellow-200");
+            
+            document.write(`
+            <div class="slide">
+                <div class="content-card p-6 md:p-10 flex flex-col md:flex-row gap-8">
+                    <!-- Info Side -->
+                    <div class="w-full md:w-1/3 flex flex-col justify-center relative z-20">
+                        <div class="inline-block self-start px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border mb-4 ${badgeColor}">
+                            ${site.list} List • ${site.type}
+                        </div>
+                        <h2 class="font-display text-3xl md:text-4xl text-brand-dark mb-8 leading-tight">${site.name}</h2>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-brand-primary">
+                                <div class="w-10 text-center mr-4"><i class="fas fa-home text-xl text-brand-primary"></i></div>
+                                <div>
+                                    <div class="text-xs text-slate-400 font-bold uppercase">Est. Units</div>
+                                    <div class="text-xl font-bold text-slate-800">${site.units.toLocaleString()}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-brand-secondary">
+                                <div class="w-10 text-center mr-4"><i class="fas fa-ruler-combined text-xl text-brand-secondary"></i></div>
+                                <div>
+                                    <div class="text-xs text-slate-400 font-bold uppercase">Site Area</div>
+                                    <div class="text-xl font-bold text-slate-800">${site.area}</div>
+                                </div>
+                            </div>
+                            <div class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-brand-accent">
+                                <div class="w-10 text-center mr-4"><i class="fas fa-calendar-alt text-xl text-yellow-500"></i></div>
+                                <div>
+                                    <div class="text-xs text-slate-400 font-bold uppercase">Est. Launch</div>
+                                    <div class="text-xl font-bold text-slate-800">${site.date}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-    print("-" * 30)
-    print("Done! Copy the images from the 'optimized' folder to your main folder.")
+                    <!-- Map Side -->
+                    <div class="w-full md:w-2/3 relative z-10">
+                        <div class="map-frame h-full min-h-[300px]">
+                            <div class="map-placeholder">
+                                <i class="fas fa-map-marked-alt text-4xl mb-2"></i>
+                            </div>
+                            <img src="${site.img}" onerror="this.style.display='none'" alt="${site.name} Map">
+                        </div>
+                        <!-- Mascot Placeholder -->
+                        <div class="mascot-target" data-index="${index}"></div>
+                    </div>
+                    <div class="footer-note">Created by: Kar Loon | Contact: +65 91860119</div>
+                </div>
+            </div>
+            `);
+        });
+    </script>
 
-if __name__ == "__main__":
-    optimize_images()
+    <!-- 3. CLOSING PAGE -->
+    <div class="slide">
+        <div class="content-card !bg-gradient-to-br !from-brand-primary !to-brand-secondary !text-white flex flex-col justify-center items-center text-center">
+            <div class="mascot-target relative z-30 mb-8" data-slide="end"></div>
+            <h2 class="font-display text-5xl md:text-7xl font-black mb-6 drop-shadow-lg">STAY TUNED!</h2>
+            <p class="text-2xl font-light text-blue-100 max-w-xl">For more updates and detailed analysis on the Singapore Property Market.</p>
+            <div class="mt-12 bg-white/10 backdrop-blur-md px-8 py-4 rounded-2xl border border-white/20">
+                <p class="font-bold">Kar Loon</p>
+                <p class="opacity-80">+65 91860119</p>
+            </div>
+            <div class="footer-note text-blue-200">Created by: Kar Loon | Contact: +65 91860119</div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+        // 1. CHART.JS CONFIGURATION (All 19 Sites)
+        document.addEventListener('DOMContentLoaded', function() {
+            const ctx = document.getElementById('summaryChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [
+                        'Holland Plain', 'River Valley', 'Peck Hay', 'Berlayar', 'Canberra (EC)', 
+                        'Upp Changi', 'Lor Puntong', 'Sembawang (EC)', 'Bayshore',
+                        'Marina Gdns Ln', 'Media Cir', 'Media Cir B', 'Cross St', 
+                        'Morrison Ln', 'Kitchener', 'Marina Gdns Cres', 'Woodlands', 'Town Hall', 'Telok Ayer'
+                    ],
+                    datasets: [{
+                        label: 'Est. Units',
+                        data: [
+                            280, 470, 315, 415, 185, 1040, 140, 450, 1280, // Confirmed
+                            390, 520, 500, 315, 200, 135, // Reserve Resi
+                            775, 440, 1200, // Reserve White
+                            135 // Reserve Hotel/Resi
+                        ],
+                        backgroundColor: [
+                            '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', // Blue
+                            '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', // Yellow
+                            '#9333EA', '#9333EA', '#9333EA', // Purple
+                            '#FACC15' // Yellow (Reserve)
+                        ],
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { 
+                        legend: { display: false },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    return context.parsed.y + ' Units';
+                                },
+                                title: function(tooltipItems) {
+                                    return tooltipItems[0].label; // Standard title logic
+                                }
+                            }
+                        }
+                    },
+                    scales: { 
+                        y: { beginAtZero: true },
+                        x: { ticks: { font: { size: 10 }, maxRotation: 45, minRotation: 45 } } 
+                    }
+                }
+            });
+
+            // 2. MASCOT RANDOMIZER LOGIC (3D Clock)
+            const mascotHTML = `
+                <div class="bell bell-l"></div><div class="bell bell-r"></div><div class="bell-hammer"></div>
+                <div class="limb leg-l"></div><div class="limb leg-r"></div>
+                <div class="limb arm-l"></div><div class="limb arm-r"></div>
+                <div class="clock-body"><div class="face-ring"><div class="glasses"><div class="lens"><div class="eye eye-l"></div></div><div class="bridge"></div><div class="lens"><div class="eye eye-r"></div></div></div><div class="mouth"></div></div></div>
+            `;
+
+            document.querySelectorAll('.mascot-target').forEach(target => {
+                const wrapper = document.createElement('div');
+                wrapper.className = 'mascot-wrapper';
+                wrapper.innerHTML = mascotHTML;
+
+                // Randomize Position
+                const sideX = Math.random() > 0.5 ? 'left' : 'right';
+                const sideY = Math.random() > 0.5 ? 'top' : 'bottom';
+                wrapper.style.position = 'absolute';
+                wrapper.style[sideX] = (Math.random() * 20 - 10) + '%';
+                wrapper.style[sideY] = (Math.random() * 20 - 5) + '%'; 
+                
+                const rot = Math.floor(Math.random() * 40) - 20;
+                wrapper.style.transform = `rotate(${rot}deg) scale(${0.8 + Math.random() * 0.4})`;
+                wrapper.style.zIndex = Math.random() > 0.3 ? '30' : '5';
+
+                // Random Poses
+                const armL = wrapper.querySelector('.arm-l');
+                const armR = wrapper.querySelector('.arm-r');
+                armL.style.transform = `rotate(${Math.floor(Math.random() * 180)}deg)`;
+                armR.style.transform = `rotate(${Math.floor(Math.random() * 180 - 180)}deg)`;
+
+                // Random Expressions
+                const eyes = ['eye-normal', 'eye-wink', 'eye-happy'];
+                const mouths = ['mouth-smile', 'mouth-o'];
+                
+                const eyeL = wrapper.querySelector('.eye-l');
+                const eyeR = wrapper.querySelector('.eye-r');
+                const mouth = wrapper.querySelector('.mouth');
+
+                eyeL.className = `eye ${eyes[Math.floor(Math.random()*eyes.length)]}`;
+                eyeR.className = `eye ${eyes[Math.floor(Math.random()*eyes.length)]}`;
+                mouth.className = `mouth ${mouths[Math.floor(Math.random()*mouths.length)]}`;
+
+                target.parentNode.appendChild(wrapper);
+                target.remove();
+            });
+        });
+    </script>
+</body>
+</html>
