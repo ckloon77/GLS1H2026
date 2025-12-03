@@ -7,7 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Montserrat:wght@700;900&family=Patrick+Hand&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -24,7 +24,8 @@
                     },
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
-                        display: ['Montserrat', 'sans-serif']
+                        display: ['Montserrat', 'sans-serif'],
+                        playful: ['Patrick Hand', 'cursive']
                     }
                 }
             }
@@ -39,12 +40,10 @@
             scroll-behavior: smooth;
         }
 
-        /* Hide scrollbar for clean presentation */
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #0F172A; }
         ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
 
-        /* Slide Container */
         .slide {
             min-height: 100vh;
             width: 100%;
@@ -56,9 +55,11 @@
             padding: 40px 20px;
             box-sizing: border-box;
             border-bottom: 1px solid rgba(255,255,255,0.05);
+            /* Important: slide clips the mascot when he peeks from edge */
+            overflow: hidden; 
+            z-index: 1;
         }
 
-        /* Card Container for Content */
         .content-card {
             background: #F8FAFC;
             width: 100%;
@@ -67,13 +68,13 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
             overflow: hidden;
             position: relative;
-            z-index: 10;
-            min-height: 700px; /* Consistent height */
+            z-index: 20; /* Card Base Layer */
+            min-height: 700px;
             display: flex;
             flex-direction: column;
         }
 
-        /* --- ANIMATIONS (NEW) --- */
+        /* --- ANIMATIONS --- */
         .reveal {
             opacity: 0;
             transform: translateY(30px);
@@ -83,78 +84,77 @@
             opacity: 1;
             transform: translateY(0);
         }
-        /* Stagger delays for nicer effect */
         .delay-100 { transition-delay: 0.1s; }
         .delay-200 { transition-delay: 0.2s; }
         .delay-300 { transition-delay: 0.3s; }
 
-        /* --- 3D CSS MASCOT: NOW CHOONG (CLOCK VER) --- */
+        /* --- MASCOT --- */
         .mascot-wrapper {
             position: absolute;
             width: 120px;
             height: 140px;
-            pointer-events: none; /* Let clicks pass through unless specifically interactive */
+            pointer-events: none;
             transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
             filter: drop-shadow(0 15px 10px rgba(0,0,0,0.3));
-            /* Mascot Entrance Animation */
             opacity: 0;
             animation: mascotPopIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-            animation-delay: 0.5s; /* Wait for slide content first */
+            animation-delay: 0.5s;
+            /* Ensure mascot is above card background so he is seen */
+            z-index: 30; 
         }
 
         @keyframes mascotPopIn {
             0% { opacity: 0; transform: scale(0.5) translateY(20px); }
-            100% { opacity: 1; } /* Transform is handled inline by JS randomizer, so we just fade in */
+            100% { opacity: 1; }
         }
 
-        /* 3D Parts */
-        .limb {
-            background: linear-gradient(90deg, #0D7A70, #18B0A2, #0D7A70);
-            position: absolute; border-radius: 20px; z-index: 1;
-            box-shadow: inset 0 -2px 5px rgba(0,0,0,0.3);
+        .speech-bubble {
+            position: absolute;
+            bottom: 160px;
+            right: 80px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 15px 20px;
+            width: 240px;
+            text-align: center;
+            color: #334155;
+            font-family: 'Patrick Hand', cursive;
+            font-size: 22px;
+            font-weight: 400;
+            line-height: 1.3;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            z-index: 100;
+            animation: bubblePop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            animation-delay: 1.2s;
+            opacity: 0;
+            transform: scale(0.8);
         }
+        .speech-bubble::after {
+            content: ''; position: absolute; bottom: 0; right: 20px; width: 0; height: 0;
+            border: 15px solid transparent; border-top-color: rgba(255, 255, 255, 0.95); border-bottom: 0; border-right: 0;
+            margin-left: -10px; margin-bottom: -10px;
+        }
+        @keyframes bubblePop { to { opacity: 1; transform: scale(1); } }
+
+        /* Mascot Parts */
+        .limb { background: linear-gradient(90deg, #0D7A70, #18B0A2, #0D7A70); position: absolute; border-radius: 20px; z-index: 1; box-shadow: inset 0 -2px 5px rgba(0,0,0,0.3); }
         .leg-l { width: 12px; height: 26px; bottom: 0; left: 35px; }
         .leg-r { width: 12px; height: 26px; bottom: 0; right: 35px; }
         .arm-l { width: 10px; height: 35px; top: 65px; left: 10px; transform-origin: top center; }
         .arm-r { width: 10px; height: 35px; top: 65px; right: 10px; transform-origin: top center; }
-
-        .bell {
-            width: 34px; height: 20px;
-            background: radial-gradient(circle at 30% 30%, #F5D0A9, #B46B3E, #8B4513);
-            border-radius: 40px 40px 0 0; position: absolute; top: 8px; z-index: 1;
-            box-shadow: 0 4px 4px rgba(0,0,0,0.3);
-        }
+        .bell { width: 34px; height: 20px; background: radial-gradient(circle at 30% 30%, #F5D0A9, #B46B3E, #8B4513); border-radius: 40px 40px 0 0; position: absolute; top: 8px; z-index: 1; box-shadow: 0 4px 4px rgba(0,0,0,0.3); }
         .bell-l { left: 15px; transform: rotate(-25deg); }
         .bell-r { right: 15px; transform: rotate(25deg); }
         .bell-hammer { width: 8px; height: 6px; background: #5A2E0C; position: absolute; top: 18px; left: 56px; border-radius: 2px; }
-
-        .clock-body {
-            width: 96px; height: 96px;
-            background: radial-gradient(circle at 35% 35%, #FFF8E7, #E5C99E, #C19A6B);
-            border-radius: 50%; position: absolute; bottom: 20px; left: 12px; z-index: 2;
-            border: 3px solid #FFF;
-            box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2);
-        }
-
-        .face-ring {
-            position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px;
-            border-radius: 50%; border: 2px solid #22D3EE; background: #FDF6E3;
-            box-shadow: inset 2px 2px 8px rgba(0,0,0,0.1), 0 0 8px rgba(34, 211, 238, 0.6);
-        }
-
+        .clock-body { width: 96px; height: 96px; background: radial-gradient(circle at 35% 35%, #FFF8E7, #E5C99E, #C19A6B); border-radius: 50%; position: absolute; bottom: 20px; left: 12px; z-index: 2; border: 3px solid #FFF; box-shadow: inset -5px -5px 15px rgba(0,0,0,0.2); }
+        .face-ring { position: absolute; top: 4px; left: 4px; right: 4px; bottom: 4px; border-radius: 50%; border: 2px solid #22D3EE; background: #FDF6E3; box-shadow: inset 2px 2px 8px rgba(0,0,0,0.1), 0 0 8px rgba(34, 211, 238, 0.6); }
         .glasses { position: absolute; top: 32px; width: 100%; display: flex; justify-content: center; gap: 4px; }
-        .lens {
-            width: 28px; height: 28px; border: 2px solid #5A3E2B; border-radius: 50%; position: relative;
-            background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 100%);
-        }
+        .lens { width: 28px; height: 28px; border: 2px solid #5A3E2B; border-radius: 50%; position: relative; background: linear-gradient(135deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 100%); }
         .bridge { width: 8px; height: 2px; background: #5A3E2B; margin-top: 13px; }
-
-        /* Expressions */
         .eye { background: #333; border-radius: 50%; position: absolute; }
         .eye-normal { width: 10px; height: 10px; top: 8px; left: 8px; }
         .eye-wink { width: 12px; height: 4px; border-bottom: 3px solid #333; border-radius: 0; background: transparent; top: 8px; left: 7px; }
         .eye-happy { width: 12px; height: 6px; border-top: 3px solid #333; border-radius: 50% 50% 0 0; background: transparent; top: 10px; left: 7px; }
-        
         .mouth { position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); }
         .mouth-smile { width: 20px; height: 10px; border-bottom: 3px solid #333; border-radius: 0 0 20px 20px; }
         .mouth-o { width: 12px; height: 12px; border: 3px solid #333; border-radius: 50%; background: #333; }
@@ -162,48 +162,33 @@
         /* --- MAP CONTAINER --- */
         .map-frame {
             width: 100%;
-            max-width: 640px; /* Enforce 640px width max */
-            aspect-ratio: 4 / 3; /* Enforce 640x480 Ratio */
+            max-width: 640px; 
+            aspect-ratio: 4 / 3;
             border-radius: 16px;
             overflow: hidden;
             border: 8px solid white;
             box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             background-color: #e2e8f0;
             position: relative;
-            margin: 0 auto; /* Center vertically/horizontally */
+            margin: 0 auto;
         }
         .map-frame img {
             width: 100%;
             height: 100%;
             object-fit: cover;
-            transition: transform 0.5s ease;
             position: relative;
             z-index: 10;
         }
-        .map-frame:hover img {
-            transform: scale(1.02);
-        }
         .map-placeholder {
             position: absolute; top:0; left:0; width:100%; height:100%;
-            display: flex; flex-direction: column; 
-            /* Align bottom right */
-            justify-content: flex-end; 
-            align-items: flex-end;
-            padding: 20px; /* Padding from the edge */
-            color: #cbd5e1; /* Subtle color */
-            z-index: 1;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            color: #94a3b8; z-index: 1; text-align: center;
         }
 
         /* Footer */
         .footer-note {
-            position: absolute;
-            bottom: 10px;
-            width: 100%;
-            text-align: center;
-            font-size: 0.75rem;
-            color: #94a3b8;
-            font-weight: 600;
-            z-index: 100;
+            position: absolute; bottom: 10px; width: 100%; text-align: center;
+            font-size: 0.75rem; color: #94a3b8; font-weight: 600; z-index: 100;
         }
     </style>
 </head>
@@ -212,34 +197,24 @@
     <!-- 1. COVER PAGE -->
     <div class="slide">
         <div class="content-card !bg-[#0F172A] !text-white overflow-hidden flex flex-col justify-center items-center relative">
-            <!-- Background Decoration -->
             <div class="absolute inset-0 opacity-20">
                 <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/cubes.png')]"></div>
                 <div class="absolute top-0 right-0 w-96 h-96 bg-brand-primary rounded-full blur-[120px]"></div>
                 <div class="absolute bottom-0 left-0 w-96 h-96 bg-brand-secondary rounded-full blur-[120px]"></div>
             </div>
 
-            <div class="relative z-10 text-center px-4 reveal">
+            <div class="relative z-10 text-center px-4 reveal mb-24">
                 <div class="inline-block px-4 py-1 border border-cyan-400 rounded-full text-cyan-400 text-sm font-bold tracking-widest mb-6 animate-pulse">
                     MARKET UPDATE
                 </div>
-                <h1 class="font-display text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-blue-400 mb-6 drop-shadow-2xl">
+                <h1 class="font-display text-4xl sm:text-6xl md:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-white via-cyan-200 to-blue-400 mb-6 drop-shadow-2xl leading-tight">
                     1H2026<br>GLS PROGRAMME
                 </h1>
-                <p class="font-sans text-xl md:text-2xl text-slate-300 font-light tracking-wide max-w-2xl mx-auto">
+                <p class="font-sans text-lg sm:text-xl md:text-2xl text-slate-300 font-light tracking-wide max-w-2xl mx-auto leading-relaxed">
                     A Comprehensive Guide to Residential & Mixed Development Sites
                 </p>
             </div>
 
-            <!-- Intro Mascot -->
-            <div class="mascot-wrapper" style="bottom: 40px; right: 40px; transform: scale(1.5);">
-                <div class="bell bell-l"></div><div class="bell bell-r"></div><div class="bell-hammer"></div>
-                <div class="limb leg-l"></div><div class="limb leg-r"></div>
-                <div class="limb arm-l" style="transform: rotate(-140deg);"></div> <!-- Waving -->
-                <div class="limb arm-r" style="transform: rotate(20deg);"></div>
-                <div class="clock-body"><div class="face-ring"><div class="glasses"><div class="lens"><div class="eye eye-normal"></div></div><div class="bridge"></div><div class="lens"><div class="eye eye-wink"></div></div></div><div class="mouth mouth-smile"></div></div></div>
-            </div>
-            
             <div class="footer-note text-slate-500">Created by: Kar Loon | Contact: +65 91860119</div>
         </div>
     </div>
@@ -248,9 +223,7 @@
     <div class="slide">
         <div class="content-card p-8 flex flex-col justify-center">
             <h2 class="font-display text-4xl text-brand-dark mb-8 text-center md:text-left reveal">Key Highlights</h2>
-            
             <div class="flex flex-col md:flex-row gap-8 items-center md:items-start">
-                <!-- Left: Text Points -->
                 <div class="w-full md:w-2/3 pr-0 md:pr-12 reveal delay-100">
                     <ul class="text-slate-600 text-sm md:text-base leading-relaxed space-y-4 list-disc pl-4 marker:text-brand-secondary">
                         <li>The overall private housing supply in the GLS programme for 1H2026 will be sustained at a high level of around <strong>9,200 units</strong>, similar to that in 2H2025.</li>
@@ -259,8 +232,6 @@
                         <li>The Government will continue to closely monitor economic and property market conditions, calibrating the release of GLS supply to ensure a stable and sustainable housing market.</li>
                     </ul>
                 </div>
-
-                <!-- Right: Stats Box -->
                 <div class="w-full md:w-1/3 flex flex-col gap-4 reveal delay-200">
                     <div class="bg-blue-50 p-6 rounded-xl border border-blue-100 text-center shadow-sm">
                         <div class="text-4xl font-black text-brand-primary">4,575</div>
@@ -276,123 +247,32 @@
                     </div>
                 </div>
             </div>
-            
-            <!-- Mascot: Bottom Right, safe zone -->
-            <div class="mascot-target" data-slide="summary-text"></div>
             <div class="footer-note">Created by: Kar Loon | Contact: +65 91860119</div>
         </div>
     </div>
 
     <!-- 2B. EXECUTIVE SUMMARY: SUPPLY BREAKDOWN -->
     <div class="slide">
-        <!-- Added md:pr-32 to header container to reserve space for mascot -->
         <div class="content-card p-8 flex flex-col h-auto">
             <div class="flex flex-col md:flex-row justify-between items-center mb-6 md:pr-32 relative z-20 reveal">
                 <h2 class="font-display text-4xl text-brand-dark text-center md:text-left">Supply Breakdown</h2>
-                <!-- Legend -->
                 <div class="flex gap-4 mt-4 md:mt-0 text-xs md:text-sm font-bold uppercase">
                     <div class="flex items-center"><div class="w-4 h-4 bg-[#2563EB] rounded mr-2"></div> Confirmed List</div>
                     <div class="flex items-center"><div class="w-4 h-4 bg-[#FACC15] rounded mr-2"></div> Reserve List</div>
                     <div class="flex items-center"><div class="w-4 h-4 bg-[#9333EA] rounded mr-2"></div> White Site</div>
                 </div>
             </div>
-            
             <div class="flex-grow bg-white rounded-xl p-4 shadow-inner flex items-center justify-center relative w-full h-[60vh] reveal delay-100">
                 <div class="chart-container w-full h-full">
                     <canvas id="summaryChart"></canvas>
                 </div>
             </div>
-            
-            <!-- Mascot: Top Right of Slide (Outside Chart) -->
-            <div class="mascot-target" data-slide="summary-chart"></div>
             <div class="footer-note">Created by: Kar Loon | Contact: +65 91860119</div>
         </div>
     </div>
 
-    <!-- TEMPLATE FOR SITE SLIDES -->
-    <script>
-        // Data for all sites
-        const sites = [
-            // CONFIRMED LIST
-            { name: "Holland Plain", type: "Residential", list: "Confirmed", units: 280, area: "1.57 ha", date: "Feb 2026", img: "holland plain.jpg", color: "blue" },
-            { name: "River Valley Green (Parcel C)", type: "Residential", list: "Confirmed", units: 470, area: "1.15 ha", date: "Apr 2026", img: "river valley green parcal c.jpg", color: "blue" },
-            { name: "Peck Hay Road", type: "Residential", list: "Confirmed", units: 315, area: "0.55 ha", date: "Apr 2026", img: "Peck Hay Road.jpg", color: "blue" },
-            { name: "Berlayar Drive", type: "Residential", list: "Confirmed", units: 415, area: "2.54 ha", date: "May 2026", img: "berlayar drive.jpg", color: "blue" },
-            { name: "Canberra Drive (EC)", type: "EC", list: "Confirmed", units: 185, area: "1.16 ha", date: "May 2026", img: "canberra drive EC.jpg", color: "blue" },
-            { name: "New Upper Changi Road", type: "Residential", list: "Confirmed", units: 1040, area: "3.16 ha", date: "May 2026", img: "New Upper Changi Road.jpg", color: "blue" },
-            { name: "Lorong Puntong", type: "Residential", list: "Confirmed", units: 140, area: "0.43 ha", date: "Jun 2026", img: "Lorong Puntong (Sin ming).jpg", color: "blue" },
-            { name: "Sembawang Drive (EC)", type: "EC", list: "Confirmed", units: 450, area: "1.29 ha", date: "Jun 2026", img: "sembawang drive EC.jpg", color: "blue" },
-            { name: "Bayshore Drive", type: "Mixed Use", list: "Confirmed", units: 1280, area: "5.74 ha", date: "Mar 2026", img: "bayshore drive.jpg", color: "blue" },
-            
-            // RESERVE LIST
-            { name: "Marina Gardens Lane", type: "Residential", list: "Reserve", units: 390, area: "0.60 ha", date: "Available", img: "Marina Gardens Lane.jpg", color: "yellow" },
-            { name: "Media Circle", type: "Residential", list: "Reserve", units: 520, area: "0.57 ha", date: "Available", img: "Media Circle.jpg", color: "yellow" },
-            { name: "Media Circle (Parcel B)", type: "Residential", list: "Reserve", units: 500, area: "1.00 ha", date: "Available", img: "Media Circle (Parcel B).jpg", color: "yellow" },
-            { name: "Cross Street", type: "Residential", list: "Reserve", units: 315, area: "0.23 ha", date: "Available", img: "Cross Street.jpg", color: "yellow" },
-            { name: "Morrison Lane", type: "Residential", list: "Reserve", units: 200, area: "0.66 ha", date: "Feb 2026", img: "Morrison Lane.jpg", color: "yellow" },
-            { name: "Kitchener Link", type: "Residential", list: "Reserve", units: 135, area: "0.39 ha", date: "Jun 2026", img: "Kitchener Link.jpg", color: "yellow" },
-            { name: "Telok Ayer Street", type: "Hotel / Residential", list: "Reserve", units: 135, area: "0.42 ha", date: "Dec 2025", img: "Telok Ayer Street.jpg", color: "yellow" },
-            { name: "Marina Gardens Crescent", type: "White Site", list: "Reserve", units: 775, area: "1.73 ha", date: "Available", img: "Marina Gardens White Site.jpg", color: "purple" },
-            { name: "Woodlands Avenue 2", type: "White Site", list: "Reserve", units: 440, area: "2.75 ha", date: "Available", img: "woodlands avenue 2.jpg", color: "purple" },
-            { name: "Town Hall Link", type: "White Site", list: "Reserve", units: 1200, area: "3.72 ha", date: "Mar 2026", img: "town hall link.jpg", color: "purple" }
-        ];
-
-        // Generate Slides
-        sites.forEach((site, index) => {
-            const badgeColor = site.list === "Confirmed" ? "bg-blue-100 text-brand-primary border-blue-200" : (site.type === "White Site" ? "bg-purple-100 text-purple-600 border-purple-200" : "bg-yellow-100 text-yellow-700 border-yellow-200");
-            
-            document.write(`
-            <div class="slide">
-                <div class="content-card p-6 md:p-10 flex flex-col md:flex-row gap-8">
-                    <!-- Info Side -->
-                    <div class="w-full md:w-1/3 flex flex-col justify-center relative z-20 reveal">
-                        <div class="inline-block self-start px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border mb-4 ${badgeColor}">
-                            ${site.list} List • ${site.type}
-                        </div>
-                        <h2 class="font-display text-3xl md:text-4xl text-brand-dark mb-8 leading-tight">${site.name}</h2>
-                        
-                        <div class="space-y-4">
-                            <div class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-brand-primary">
-                                <div class="w-10 text-center mr-4"><i class="fas fa-home text-xl text-brand-primary"></i></div>
-                                <div>
-                                    <div class="text-xs text-slate-400 font-bold uppercase">Est. Units</div>
-                                    <div class="text-xl font-bold text-slate-800">${site.units.toLocaleString()}</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-brand-secondary">
-                                <div class="w-10 text-center mr-4"><i class="fas fa-ruler-combined text-xl text-brand-secondary"></i></div>
-                                <div>
-                                    <div class="text-xs text-slate-400 font-bold uppercase">Site Area</div>
-                                    <div class="text-xl font-bold text-slate-800">${site.area}</div>
-                                </div>
-                            </div>
-                            <div class="flex items-center p-4 bg-white rounded-lg shadow-sm border-l-4 border-brand-accent">
-                                <div class="w-10 text-center mr-4"><i class="fas fa-calendar-alt text-xl text-yellow-500"></i></div>
-                                <div>
-                                    <div class="text-xs text-slate-400 font-bold uppercase">Est. Launch</div>
-                                    <div class="text-xl font-bold text-slate-800">${site.date}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Map Side -->
-                    <div class="w-full md:w-2/3 relative z-10 flex flex-col justify-center reveal delay-100">
-                        <div class="map-frame">
-                            <div class="map-placeholder">
-                                <i class="fas fa-map-marked-alt text-4xl mb-2"></i>
-                            </div>
-                            <img src="${site.img}" onerror="this.style.display='none'" alt="${site.name} Map">
-                        </div>
-                        <!-- Mascot Placeholder -->
-                        <div class="mascot-target" data-index="${index}"></div>
-                    </div>
-                    <div class="footer-note">Created by: Kar Loon | Contact: +65 91860119</div>
-                </div>
-            </div>
-            `);
-        });
-    </script>
+    <!-- CONTAINER FOR GENERATED SLIDES -->
+    <div id="generated-slides"></div>
 
     <!-- 3. CLOSING PAGE -->
     <div class="slide">
@@ -410,9 +290,96 @@
 
     <!-- SCRIPTS -->
     <script>
-        // 1. CHART.JS CONFIGURATION (All 19 Sites)
         document.addEventListener('DOMContentLoaded', function() {
-            // Custom Plugin to draw labels on top of bars
+            // 1. GENERATE SITE SLIDES DYNAMICALLY
+            const sites = [
+                { name: "Holland Plain", type: "Residential", list: "Confirmed", units: 280, area: "1.57 ha", date: "Feb 2026", img: "holland plain.jpg", color: "blue", c1n: "Holland Link (Jul 2025)", c1p: "$1,432", c2n: "Bukit Timah Rd (Nov 2025)", c2p: "$1,820" },
+                { name: "River Valley Green (Parcel C)", type: "Residential", list: "Confirmed", units: 470, area: "1.15 ha", date: "Apr 2026", img: "river valley green parcal c.jpg", color: "blue", c1n: "River Green (Jun 2024)", c1p: "$1,325", c2n: "Zion Road B (Aug 2024)", c2p: "$1,304" },
+                { name: "Peck Hay Road", type: "Residential", list: "Confirmed", units: 315, area: "0.55 ha", date: "Apr 2026", img: "Peck Hay Road.jpg", color: "blue", c1n: "Bukit Timah Rd (Nov 2025)", c1p: "$1,820", c2n: "Kopar at Newton (Jan 2019)", c2p: "$1,192" },
+                { name: "Berlayar Drive", type: "Residential", list: "Confirmed", units: 415, area: "2.54 ha", date: "May 2026", img: "berlayar drive.jpg", color: "blue", c1n: "Telok Blangah Rd (Nov 2025)", c1p: "$1,326", c2n: "Blossoms By The Park (Sep 2021)", c2p: "$1,246" },
+                { name: "Canberra Drive (EC)", type: "EC", list: "Confirmed", units: 185, area: "1.16 ha", date: "May 2026", img: "canberra drive EC.jpg", color: "blue", c1n: "Sembawang Rd EC (Sep 2025)", c1p: "$692", c2n: "Canberra Link (EC)", c2p: "$566" },
+                { name: "New Upper Changi Road", type: "Residential", list: "Confirmed", units: 1040, area: "3.16 ha", date: "May 2026", img: "New Upper Changi Road.jpg", color: "blue", c1n: "Bedok Rise (Nov 2025)", c1p: "$1,330", c2n: "Bayshore Road (Mar 2025)", c2p: "$1,388" },
+                { name: "Lorong Puntong", type: "Residential", list: "Confirmed", units: 140, area: "0.43 ha", date: "Jun 2026", img: "Lorong Puntong (Sin ming).jpg", color: "blue", c1n: "Chuan Grove (Jul 2025)", c1p: "$1,376", c2n: "Ang Mo Kio Ave 1", c2p: "$1,118" },
+                { name: "Sembawang Drive (EC)", type: "EC", list: "Confirmed", units: 450, area: "1.29 ha", date: "Jun 2026", img: "sembawang drive EC.jpg", color: "blue", c1n: "Sembawang Rd EC (Sep 2025)", c1p: "$692", c2n: "Woodlands Dr 17 EC (Aug 2025)", c2p: "$782" },
+                { name: "Bayshore Drive", type: "Mixed Use", list: "Confirmed", units: 1280, area: "5.74 ha", date: "Mar 2026", img: "bayshore drive.jpg", color: "blue", c1n: "Bayshore Road (Mar 2025)", c1p: "$1,388", c2n: "Bedok Rise (Nov 2025)", c2p: "$1,330" },
+                { name: "Marina Gardens Lane", type: "Residential", list: "Reserve", units: 390, area: "0.60 ha", date: "Available", img: "Marina Gardens Lane.jpg", color: "yellow", c1n: "Marina Gdns Ln (Jun 2023)", c1p: "$1,402", c2n: "W Residences (Sep 2021)", c2p: "$1,379" },
+                { name: "Media Circle", type: "Residential", list: "Reserve", units: 520, area: "0.57 ha", date: "Available", img: "Media Circle.jpg", color: "yellow", c1n: "Media Circle (Feb 2024)", c1p: "$1,191", c2n: "Slim Barracks Rise A", c2p: "$1,246" },
+                { name: "Media Circle (Parcel B)", type: "Residential", list: "Reserve", units: 500, area: "1.00 ha", date: "Available", img: "Media Circle (Parcel B).jpg", color: "yellow", c1n: "Media Circle (Feb 2024)", c1p: "$1,191", c2n: "Slim Barracks Rise A", c2p: "$1,246" },
+                { name: "Cross Street", type: "Residential", list: "Reserve", units: 315, area: "0.23 ha", date: "Available", img: "Cross Street.jpg", color: "yellow", c1n: "W Residences (Sep 2021)", c1p: "$1,379", c2n: "One Bernam (Sep 2019)", c2p: "$1,463" },
+                { name: "Morrison Lane", type: "Residential", list: "Reserve", units: 200, area: "0.66 ha", date: "Feb 2026", img: "Morrison Lane.jpg", color: "yellow", c1n: "River Green (Jun 2024)", c1p: "$1,325", c2n: "Zion Road B (Aug 2024)", c2p: "$1,304" },
+                { name: "Kitchener Link", type: "Residential", list: "Reserve", units: 135, area: "0.39 ha", date: "Jun 2026", img: "Kitchener Link.jpg", color: "yellow", c1n: "Dorset Road (Oct 2025)", c1p: "$1,338", c2n: "Piccadilly Grand (Apr 2021)", c2p: "$1,129" },
+                { name: "Telok Ayer Street", type: "Hotel / Residential", list: "Reserve", units: 135, area: "0.42 ha", date: "Dec 2025", img: "Telok Ayer Street.jpg", color: "yellow", c1n: "W Residences (Sep 2021)", c1p: "$1,379", c2n: "One Bernam (Sep 2019)", c2p: "$1,463" },
+                { name: "Marina Gardens Crescent", type: "White Site", list: "Reserve", units: 775, area: "1.73 ha", date: "Available", img: "Marina Gardens White Site.jpg", color: "purple", c1n: "Marina Gdns Ln (Jun 2023)", c1p: "$1,402", c2n: "W Residences (Sep 2021)", c2p: "$1,379" },
+                { name: "Woodlands Avenue 2", type: "White Site", list: "Reserve", units: 440, area: "2.75 ha", date: "Available", img: "woodlands avenue 2.jpg", color: "purple", c1n: "Norwood Grand (Sep 2023)", c1p: "$904", c2n: "Woodlands Dr 17 EC (Aug 2025)", c2p: "$782" },
+                { name: "Town Hall Link", type: "White Site", list: "Reserve", units: 1200, area: "3.72 ha", date: "Mar 2026", img: "town hall link.jpg", color: "purple", c1n: "Lakeside Apts (Enbloc)", c1p: "$1,077", c2n: "Sora (Jul 2022)", c2p: "$1,023" }
+            ];
+
+            const slidesContainer = document.getElementById('generated-slides');
+            
+            sites.forEach((site, index) => {
+                const badgeColor = site.list === "Confirmed" ? "bg-blue-100 text-brand-primary border-blue-200" : (site.type === "White Site" ? "bg-purple-100 text-purple-600 border-purple-200" : "bg-yellow-100 text-yellow-700 border-yellow-200");
+                
+                const slideHTML = `
+                <div class="slide">
+                    <div class="content-card p-6 md:p-10 flex flex-col md:flex-row gap-8">
+                        <div class="w-full md:w-1/3 flex flex-col justify-center relative z-20 reveal">
+                            <div class="inline-block self-start px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border mb-4 ${badgeColor}">
+                                ${site.list} List • ${site.type}
+                            </div>
+                            <h2 class="font-display text-3xl md:text-4xl text-brand-dark mb-6 leading-tight">${site.name}</h2>
+                            <div class="space-y-3">
+                                <div class="flex items-center p-3 bg-white rounded-lg shadow-sm border-l-4 border-brand-primary">
+                                    <div class="w-8 text-center mr-3"><i class="fas fa-home text-lg text-brand-primary"></i></div>
+                                    <div>
+                                        <div class="text-[10px] text-slate-400 font-bold uppercase">Est. Units</div>
+                                        <div class="text-lg font-bold text-slate-800">${site.units.toLocaleString()}</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-white rounded-lg shadow-sm border-l-4 border-brand-secondary">
+                                    <div class="w-8 text-center mr-3"><i class="fas fa-ruler-combined text-lg text-brand-secondary"></i></div>
+                                    <div>
+                                        <div class="text-[10px] text-slate-400 font-bold uppercase">Site Area</div>
+                                        <div class="text-lg font-bold text-slate-800">${site.area}</div>
+                                    </div>
+                                </div>
+                                <div class="flex items-center p-3 bg-white rounded-lg shadow-sm border-l-4 border-brand-accent">
+                                    <div class="w-8 text-center mr-3"><i class="fas fa-calendar-alt text-lg text-yellow-500"></i></div>
+                                    <div>
+                                        <div class="text-[10px] text-slate-400 font-bold uppercase">Est. Launch</div>
+                                        <div class="text-lg font-bold text-slate-800">${site.date}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-6 pt-4 border-t border-slate-200 reveal delay-100">
+                                <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-2">Nearby Land Trans. (psf ppr)</h4>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div class="bg-slate-50 p-2 rounded border border-slate-200">
+                                        <div class="text-[10px] text-slate-500 leading-tight mb-1 truncate" title="${site.c1n}">${site.c1n}</div>
+                                        <div class="text-sm font-bold text-slate-700">${site.c1p}</div>
+                                    </div>
+                                    <div class="bg-slate-50 p-2 rounded border border-slate-200">
+                                        <div class="text-[10px] text-slate-500 leading-tight mb-1 truncate" title="${site.c2n}">${site.c2n}</div>
+                                        <div class="text-sm font-bold text-slate-700">${site.c2p}</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="w-full md:w-2/3 relative z-10 flex flex-col justify-center reveal delay-200">
+                            <div class="map-frame">
+                                <div class="map-placeholder">
+                                    <i class="fas fa-map-marked-alt text-4xl mb-2"></i>
+                                </div>
+                                <img src="${site.img}" onerror="this.style.display='none'" alt="${site.name} Map">
+                            </div>
+                        </div>
+                        <div class="footer-note">Created by: Kar Loon | Contact: +65 91860119</div>
+                    </div>
+                </div>
+                `;
+                slidesContainer.innerHTML += slideHTML;
+            });
+
+            // 2. CHART.JS CONFIGURATION
             const valueLabelPlugin = {
                 id: 'valueLabelPlugin',
                 afterDatasetsDraw(chart, args, options) {
@@ -423,8 +390,8 @@
                         meta.data.forEach((bar, index) => {
                             const value = dataset.data[index];
                             if (value !== null && value !== undefined) {
-                                ctx.fillStyle = '#64748b'; // Slate-500
-                                ctx.font = 'bold 10px Inter'; // Small, legible font
+                                ctx.fillStyle = '#64748b'; 
+                                ctx.font = 'bold 10px Inter';
                                 ctx.textAlign = 'center';
                                 ctx.textBaseline = 'bottom';
                                 ctx.fillText(value.toLocaleString(), bar.x, bar.y - 4);
@@ -438,7 +405,7 @@
             const ctx = document.getElementById('summaryChart').getContext('2d');
             new Chart(ctx, {
                 type: 'bar',
-                plugins: [valueLabelPlugin], // Register the plugin
+                plugins: [valueLabelPlugin],
                 data: {
                     labels: [
                         'Holland Plain', 'River Valley', 'Peck Hay', 'Berlayar', 'Canberra (EC)', 
@@ -449,15 +416,14 @@
                     datasets: [{
                         label: 'Est. Units',
                         data: [
-                            280, 470, 315, 415, 185, 1040, 140, 450, 1280, // Confirmed
-                            390, 520, 500, 315, 200, 135, 135, // Reserve Resi + Telok Ayer
-                            775, 440, 1200 // Reserve White
+                            280, 470, 315, 415, 185, 1040, 140, 450, 1280,
+                            390, 520, 500, 315, 200, 135, 135,
+                            775, 440, 1200
                         ],
                         backgroundColor: [
-                            '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', // Blue
-                            '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', // Yellow
-                            '#9333EA', '#9333EA', '#9333EA', // Purple
-                            '#FACC15' // Yellow (Reserve)
+                            '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB', '#2563EB',
+                            '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15', '#FACC15',
+                            '#9333EA', '#9333EA', '#9333EA', '#FACC15'
                         ],
                         borderRadius: 4
                     }]
@@ -465,32 +431,16 @@
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
-                    plugins: { 
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.parsed.y + ' Units';
-                                },
-                                title: function(tooltipItems) {
-                                    return tooltipItems[0].label; // Standard title logic
-                                }
-                            }
-                        }
-                    },
+                    plugins: { legend: { display: false } },
                     scales: { 
                         y: { beginAtZero: true },
                         x: { ticks: { font: { size: 10 }, maxRotation: 45, minRotation: 45 } } 
                     },
-                    layout: {
-                        padding: {
-                            top: 25 // Ensure labels don't get cut off
-                        }
-                    }
+                    layout: { padding: { top: 25 } }
                 }
             });
 
-            // 2. MASCOT RANDOMIZER LOGIC (3D Clock)
+            // 3. MASCOT RANDOMIZER LOGIC
             const mascotHTML = `
                 <div class="bell bell-l"></div><div class="bell bell-r"></div><div class="bell-hammer"></div>
                 <div class="limb leg-l"></div><div class="limb leg-r"></div>
@@ -498,54 +448,103 @@
                 <div class="clock-body"><div class="face-ring"><div class="glasses"><div class="lens"><div class="eye eye-l"></div></div><div class="bridge"></div><div class="lens"><div class="eye eye-r"></div></div></div><div class="mouth"></div></div></div>
             `;
 
-            document.querySelectorAll('.mascot-target').forEach(target => {
+            const allSlides = document.querySelectorAll('.slide');
+            allSlides.forEach((slide, index) => {
+                // Cleanup
+                const existing = slide.querySelectorAll('.mascot-wrapper');
+                existing.forEach(el => el.remove());
+
                 const wrapper = document.createElement('div');
                 wrapper.className = 'mascot-wrapper';
                 wrapper.innerHTML = mascotHTML;
+                
+                let isCover = index === 0;
+                let isSummary1 = index === 1;
+                let isSummary2 = index === 2;
+                let isEnd = index === allSlides.length - 1;
 
-                // Position Logic
-                if (target.dataset.slide === 'summary-text') {
-                    // Safe spot: Bottom Right corner of text slide
-                    wrapper.style.position = 'absolute';
-                    wrapper.style.bottom = '20px';
+                // Default: Z-Index 30 (Front), Scale 0.5
+                wrapper.style.zIndex = '30';
+                wrapper.style.transform = 'scale(0.5)';
+
+                if (isCover) {
+                    wrapper.innerHTML = `
+                        <div class="speech-bubble">Hi I am a mascot. My name is Now Choong. I like to play hide-n-seek. Spot me. Wink!</div>
+                        ${mascotHTML}
+                    `;
+                    wrapper.style.bottom = '40px';
                     wrapper.style.right = '40px';
-                    wrapper.style.transform = 'scale(0.8) rotate(-10deg)';
-                    wrapper.style.zIndex = '30';
-                } 
-                else if (target.dataset.slide === 'summary-chart') {
-                    // Safe spot: Top Right corner of chart slide (in header area)
-                    wrapper.style.position = 'absolute';
-                    wrapper.style.top = '10px';
-                    wrapper.style.right = '10px';
-                    wrapper.style.transform = 'scale(0.8) rotate(15deg)';
-                    wrapper.style.zIndex = '30';
-                }
-                else if (target.dataset.slide === 'end') {
-                    // Center for ending
-                    wrapper.style.position = 'relative';
-                    wrapper.style.transform = 'scale(1.5)';
-                    wrapper.style.zIndex = '30';
-                }
-                else {
-                    // Randomize Position for site slides
-                    const sideX = Math.random() > 0.5 ? 'left' : 'right';
-                    const sideY = Math.random() > 0.5 ? 'top' : 'bottom';
-                    wrapper.style.position = 'absolute';
-                    wrapper.style[sideX] = (Math.random() * 20 - 10) + '%';
-                    wrapper.style[sideY] = (Math.random() * 20 - 5) + '%'; 
+                    wrapper.style.opacity = '0.85';
+                    wrapper.style.transform = 'scale(0.5)'; // 50% smaller per request
+                    slide.appendChild(wrapper);
+                } else if (isSummary1 || isSummary2 || isEnd) {
+                    // SAFE ZONES for special pages
+                    if(isSummary1) {
+                        wrapper.style.bottom = '20px';
+                        wrapper.style.right = '40px';
+                        wrapper.style.transform = 'scale(0.4) rotate(-10deg)';
+                        wrapper.style.zIndex = '5'; // Behind text if overlaps
+                    } else if (isSummary2) {
+                        wrapper.style.top = '10px';
+                        wrapper.style.right = '10px';
+                        wrapper.style.transform = 'scale(0.4) rotate(15deg)';
+                        wrapper.style.zIndex = '5';
+                    } else {
+                        // End Page
+                        wrapper.style.position = 'relative';
+                        wrapper.style.transform = 'scale(0.75)';
+                        const card = slide.querySelector('.content-card');
+                        if(card) { card.insertBefore(wrapper, card.firstChild); return; }
+                    }
+                    slide.appendChild(wrapper);
+                } else {
+                    // SITE SLIDES: PEEK FROM SCREEN EDGE
+                    // We pick an edge: Top, Bottom, Left, Right
+                    const edges = ['top', 'bottom', 'left', 'right'];
+                    const edge = edges[Math.floor(Math.random() * edges.length)];
                     
-                    const rot = Math.floor(Math.random() * 40) - 20;
-                    wrapper.style.transform = `rotate(${rot}deg) scale(${0.8 + Math.random() * 0.4})`;
-                    wrapper.style.zIndex = Math.random() > 0.3 ? '30' : '5';
+                    // Random position along that edge (10% to 90%)
+                    const pos = Math.random() * 80 + 10; 
+
+                    // Random "Peek Amount" (-50px to 20px)
+                    // -50px = mostly hidden off screen
+                    // 20px = fully inside
+                    // Mascot height ~140px scaled 0.5 -> 70px. 
+                    // So -35px is half hidden.
+                    const peek = Math.floor(Math.random() * 80) - 50; 
+                    
+                    if (edge === 'top') {
+                        wrapper.style.top = peek + 'px';
+                        wrapper.style.left = pos + '%';
+                        wrapper.style.transform = `scale(0.5) rotate(${Math.random()*20 - 10}deg)`;
+                    } else if (edge === 'bottom') {
+                        wrapper.style.bottom = peek + 'px';
+                        wrapper.style.left = pos + '%';
+                        wrapper.style.transform = `scale(0.5) rotate(${Math.random()*20 - 10}deg)`;
+                    } else if (edge === 'left') {
+                        wrapper.style.left = peek + 'px';
+                        wrapper.style.top = pos + '%';
+                        wrapper.style.transform = `scale(0.5) rotate(90deg)`;
+                    } else if (edge === 'right') {
+                        wrapper.style.right = peek + 'px';
+                        wrapper.style.top = pos + '%';
+                        wrapper.style.transform = `scale(0.5) rotate(-90deg)`;
+                    }
+                    
+                    // 50% Chance to be Behind (Z=1) if peeking, creates depth
+                    // BUT strictly visible if peek > 0. 
+                    // Safe logic: If peeking from side, always front. If top/bottom, can be behind.
+                    wrapper.style.zIndex = (edge === 'top' || edge === 'bottom') && Math.random() > 0.5 ? '1' : '30';
+                    
+                    slide.appendChild(wrapper);
                 }
 
                 // Random Poses
                 const armL = wrapper.querySelector('.arm-l');
                 const armR = wrapper.querySelector('.arm-r');
-                armL.style.transform = `rotate(${Math.floor(Math.random() * 180)}deg)`;
-                armR.style.transform = `rotate(${Math.floor(Math.random() * 180 - 180)}deg)`;
+                if(armL) armL.style.transform = `rotate(${Math.floor(Math.random() * 180)}deg)`;
+                if(armR) armR.style.transform = `rotate(${Math.floor(Math.random() * 180 - 180)}deg)`;
 
-                // Random Expressions
                 const eyes = ['eye-normal', 'eye-wink', 'eye-happy'];
                 const mouths = ['mouth-smile', 'mouth-o'];
                 
@@ -553,28 +552,12 @@
                 const eyeR = wrapper.querySelector('.eye-r');
                 const mouth = wrapper.querySelector('.mouth');
 
-                eyeL.className = `eye ${eyes[Math.floor(Math.random()*eyes.length)]}`;
-                eyeR.className = `eye ${eyes[Math.floor(Math.random()*eyes.length)]}`;
-                mouth.className = `mouth ${mouths[Math.floor(Math.random()*mouths.length)]}`;
-
-                // Animation Observer to trigger reveals
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if(entry.isIntersecting) {
-                            entry.target.classList.add('active');
-                            // If this element has specific delay classes, it handles itself
-                            // Special handling for mascot opacity if needed (using CSS animation mostly)
-                        }
-                    });
-                }, { threshold: 0.1 });
-
-                // Attach observer to revealed elements
-                // Note: The loop below does this generally, but here we just append the mascot.
-                target.parentNode.appendChild(wrapper);
-                target.remove();
+                if (eyeL) eyeL.className = `eye ${eyes[Math.floor(Math.random()*eyes.length)]}`;
+                if (eyeR) eyeR.className = `eye ${eyes[Math.floor(Math.random()*eyes.length)]}`;
+                if (mouth) mouth.className = `mouth ${mouths[Math.floor(Math.random()*mouths.length)]}`;
             });
 
-            // General Observer for Scroll Animations
+            // 4. ANIMATION OBSERVER
             const revealElements = document.querySelectorAll('.reveal');
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
