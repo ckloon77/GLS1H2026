@@ -73,7 +73,7 @@
             flex-direction: column;
         }
 
-        /* Custom Scrollbar for Experts Section */
+        /* Custom Scrollbar for Content Areas */
         .custom-scrollbar::-webkit-scrollbar { width: 6px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 3px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
@@ -380,103 +380,17 @@
         </div>
     </div>
 
-    <!-- 2C. EXPERT OPINIONS -->
-    <div class="slide">
-        <div class="content-card p-6 md:p-8 flex flex-col justify-center h-full relative">
-            <h2 class="font-display text-3xl md:text-4xl text-brand-dark mb-6 text-center md:text-left reveal relative z-10">
-                <span data-key="experts_title">Hear What Market Experts Are Saying</span>
+    <!-- 2D. SITE DIRECTORY -->
+    <div class="slide" id="directory-slide">
+        <div class="content-card p-8 flex flex-col justify-center h-full">
+            <h2 class="font-display text-4xl text-brand-dark mb-6 text-center md:text-left reveal">
+                <span data-key="directory_title">Site Directory</span>
             </h2>
-            
-            <div class="flex-grow overflow-y-auto pr-2 custom-scrollbar relative z-10" style="max-height: 75vh;">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 pb-4">
-                    <!-- Tricia Song -->
-                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow reveal delay-100">
-                        <div class="flex items-start mb-3">
-                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-brand-primary font-bold mr-3 text-lg flex-shrink-0">TS</div>
-                            <div>
-                                <div class="font-bold text-brand-dark text-sm md:text-base">Tricia Song</div>
-                                <div class="text-xs text-slate-500 font-semibold uppercase">CBRE Singapore</div>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed" data-key="expert_tricia">
-                            Programme sustains high supply to meet demand; shift to Reserve List encourages developer triggers; Bayshore mixed-use site attractive for east coast growth; New Upper Changi Road taps upgrader demand in mature estate; Peck Hay Road/Lorong Puntong palatable for smaller developers; JLD carve-out reduces risks with govt support, advancing mixed-use vision; no major CBD office sites promotes decentralization amid low vacancies.
-                        </p>
-                    </div>
-
-                    <!-- Marcus Chu -->
-                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow reveal delay-100">
-                        <div class="flex items-start mb-3">
-                            <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center text-red-600 font-bold mr-3 text-lg flex-shrink-0">MC</div>
-                            <div>
-                                <div class="font-bold text-brand-dark text-sm md:text-base">Marcus Chu</div>
-                                <div class="text-xs text-slate-500 font-semibold uppercase">ERA Singapore</div>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed" data-key="expert_marcus">
-                            Balanced supply supports stabilization; strong interest in CCR sites like Peck Hay (Newton transformation) and River Valley Green; Berlayar Drive benefits from waterfront; large sites like New Upper Changi/Bayshore likely draw consortiums; EC sites address affordability with steady pipeline; Reserve List flexibility key for market response.
-                        </p>
-                    </div>
-
-                    <!-- Kelvin Fong -->
-                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow reveal delay-200">
-                        <div class="flex items-start mb-3">
-                            <div class="w-10 h-10 rounded-full bg-yellow-100 flex items-center justify-center text-yellow-600 font-bold mr-3 text-lg flex-shrink-0">KF</div>
-                            <div>
-                                <div class="font-bold text-brand-dark text-sm md:text-base">Kelvin Fong</div>
-                                <div class="text-xs text-slate-500 font-semibold uppercase">PropNex</div>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed" data-key="expert_kelvin">
-                            Prudent calibration amid moderating prices and robust sales; diversified sites in growth areas like Bayshore, Newton, Greater Southern Waterfront; EC releases moderate competition; JLD carve-out signals collaboration, reducing developer burdens; overall boosts confidence in affordability/options.
-                        </p>
-                    </div>
-
-                    <!-- Leonard Tay -->
-                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow reveal delay-200">
-                        <div class="flex items-start mb-3">
-                            <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold mr-3 text-lg flex-shrink-0">LT</div>
-                            <div>
-                                <div class="font-bold text-brand-dark text-sm md:text-base">Leonard Tay</div>
-                                <div class="text-xs text-slate-500 font-semibold uppercase">Knight Frank</div>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed" data-key="expert_leonard">
-                            Deliberate trim in Confirmed List shifts focus to Reserve triggers; historical low trigger rates a concern; decentralization of offices avoids CBD crunch; high-interest sites include Berlayar (views), New Upper Changi (scale), Lorong Puntong (size); sustains pipeline without price pressure.
-                        </p>
-                    </div>
-
-                    <!-- Desmond Sim -->
-                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow reveal delay-300">
-                        <div class="flex items-start mb-3">
-                            <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center text-orange-600 font-bold mr-3 text-lg flex-shrink-0">DS</div>
-                            <div>
-                                <div class="font-bold text-brand-dark text-sm md:text-base">Desmond Sim</div>
-                                <div class="text-xs text-slate-500 font-semibold uppercase">Realion / OrangeTee</div>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed" data-key="expert_desmond">
-                            Positive on JLD subdivision for risk reduction and sustainability; questions office demand amid uncertainties but notes tightening rates; expects Town Hall Link trigger soon; highlights growth in Holland, River Valley, Berlayar for connectivity/appeal; EC focus aids first-timers.
-                        </p>
-                    </div>
-
-                    <!-- Wong Xian Yang -->
-                    <div class="bg-white p-5 rounded-xl border border-slate-100 shadow-sm hover:shadow-md transition-shadow reveal delay-300">
-                        <div class="flex items-start mb-3">
-                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-bold mr-3 text-lg flex-shrink-0">WX</div>
-                            <div>
-                                <div class="font-bold text-brand-dark text-sm md:text-base">Wong Xian Yang</div>
-                                <div class="text-xs text-slate-500 font-semibold uppercase">Cushman & Wakefield</div>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-xs md:text-sm leading-relaxed" data-key="expert_wong">
-                            Demand underpinned by launches, HDB resales, low unemployment; no short-term price impact; programme aligns with economic outlook and easing rates; diversified locations foster healthy bidding.
-                        </p>
-                    </div>
-                </div>
+            <div id="directory-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 overflow-y-auto custom-scrollbar pr-2" style="max-height: 70vh;">
+                <!-- JS will populate this -->
             </div>
-
-            <div class="mascot-target" data-slide="experts"></div>
-            <div class="footer-note relative z-20 bg-[#F8FAFC]">
+            <div class="mascot-target" data-slide="directory"></div>
+            <div class="footer-note">
                 <span data-key="footer">Created by: Kar Loon | Contact: +65 91860119</span>
             </div>
         </div>
@@ -541,13 +455,8 @@
                 cover_mobile_msg_2: "(Rotate for optimal viewing for all pages.)",
                 mobile_msg_1: "Built for your phone. Happy browsing!",
                 mobile_msg_2: "(Rotate for optimal viewing for all pages.)",
-                experts_title: "Hear What Market Experts Are Saying",
-                expert_tricia: "Programme sustains high supply to meet demand; shift to Reserve List encourages developer triggers; Bayshore mixed-use site attractive for east coast growth; New Upper Changi Road taps upgrader demand in mature estate; Peck Hay Road/Lorong Puntong palatable for smaller developers; JLD carve-out reduces risks with govt support, advancing mixed-use vision; no major CBD office sites promotes decentralization amid low vacancies.",
-                expert_marcus: "Balanced supply supports stabilization; strong interest in CCR sites like Peck Hay (Newton transformation) and River Valley Green; Berlayar Drive benefits from waterfront; large sites like New Upper Changi/Bayshore likely draw consortiums; EC sites address affordability with steady pipeline; Reserve List flexibility key for market response.",
-                expert_kelvin: "Prudent calibration amid moderating prices and robust sales; diversified sites in growth areas like Bayshore, Newton, Greater Southern Waterfront; EC releases moderate competition; JLD carve-out signals collaboration, reducing developer burdens; overall boosts confidence in affordability/options.",
-                expert_leonard: "Deliberate trim in Confirmed List shifts focus to Reserve triggers; historical low trigger rates a concern; decentralization of offices avoids CBD crunch; high-interest sites include Berlayar (views), New Upper Changi (scale), Lorong Puntong (size); sustains pipeline without price pressure.",
-                expert_desmond: "Positive on JLD subdivision for risk reduction and sustainability; questions office demand amid uncertainties but notes tightening rates; expects Town Hall Link trigger soon; highlights growth in Holland, River Valley, Berlayar for connectivity/appeal; EC focus aids first-timers.",
-                expert_wong: "Demand underpinned by launches, HDB resales, low unemployment; no short-term price impact; programme aligns with economic outlook and easing rates; diversified locations foster healthy bidding."
+                directory_title: "Site Directory",
+                btn_back_directory: "Back to Directory"
             },
             zh: {
                 market_update: "市场快讯",
@@ -581,13 +490,8 @@
                 cover_mobile_msg_2: "（旋转屏幕以获得最佳观看体验。）",
                 mobile_msg_1: "专为手机打造。浏览愉快！",
                 mobile_msg_2: "（旋转屏幕以获得最佳观看体验。）",
-                experts_title: "听听市场专家的看法",
-                expert_tricia: "计划维持高供应以满足需求；转向备售名单鼓励开发商触发；东海岸增长使碧湾混合用途地块具有吸引力；新樟宜路上段在成熟社区挖掘组屋升级需求；Peck Hay Road/Lorong Puntong 适合小型开发商；JLD 分拆降低风险并获政府支持，推进混合用途愿景；无主要 CBD 办公地块在低空置率下促进去中心化。",
-                expert_marcus: "平衡的供应支持市场稳定；对 Peck Hay（纽顿转型）和 River Valley Green 等 CCR 地块兴趣浓厚；Berlayar Drive 受益于滨水景观；像新樟宜路上段/碧湾这样的大型地块可能会吸引财团；EC 地块通过稳定的供应解决负担能力问题；备售名单的灵活性是应对市场的关键。",
-                expert_kelvin: "在价格缓和和销售强劲的情况下进行审慎校准；碧湾、纽顿、南部濒水区等增长区域的地块多样化；EC 发布缓和竞争；JLD 分拆标志着合作，减轻开发商负担；总体增强了对负担能力/选择的信心。",
-                expert_leonard: "确认名单的有意削减将焦点转移到备售触发；历史低触发率令人担忧；办公室去中心化避免了 CBD 紧缩；高关注度地块包括 Berlayar（景观）、新樟宜路上段（规模）、Lorong Puntong（大小）；维持供应管道而无价格压力。",
-                expert_desmond: "对 JLD 分拆以降低风险和可持续性持积极态度；在不确定性中质疑办公需求，但注意到利率收紧；预计 Town Hall Link 很快会触发；强调 Holland、River Valley、Berlayar 的连接性/吸引力增长；EC 重点帮助首次置业者。",
-                expert_wong: "需求受到新盘发布、组屋转售、低失业率的支撑；短期内无价格影响；计划与经济前景和利率放宽保持一致；多样化的地点促进健康的竞标。"
+                directory_title: "地块目录",
+                btn_back_directory: "返回目录"
             }
         };
 
@@ -616,6 +520,7 @@
             document.querySelectorAll('.slide-label-note').forEach(el => el.innerText = t.note_price);
             document.querySelectorAll('.slide-btn-price').forEach(el => el.innerText = t.btn_price);
             document.querySelectorAll('.slide-label-keypoints').forEach(el => el.innerText = t.key_points);
+            document.querySelectorAll('.slide-btn-back').forEach(el => el.innerText = t.btn_back_directory);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -753,6 +658,13 @@
                   ]
                 },
                 { name: "Sembawang Drive (EC)", type: "EC", list: "Confirmed", units: 450, area: "1.29 ha", date: "Jun 2026", img: "sembawang drive EC.jpg", color: "blue", 
+                  keyPoints: [
+                      "Quieter northern pocket with greenery/waterfront",
+                      "Near Northoaks/Endeavour Primary schools",
+                      "Appeals to upgraders",
+                      "Opportunity for smaller developers",
+                      "Bus to Sembawang MRT"
+                  ],
                   launching: [
                     { name: "Sembawang Rd EC (Sep 2025)", price: "$692" },
                     { name: "Woodlands Dr 17 EC (Aug 2025)", price: "$782" }
@@ -928,12 +840,34 @@
             ];
 
             const slidesContainer = document.getElementById('generated-slides');
+            const directoryGrid = document.getElementById('directory-grid');
             const waBase = "https://wa.me/6591860119?text=Hi%20Kar%20Loon!!%20%F0%9F%91%8B%F0%9F%98%84%0ASaw%20your%20%E2%80%9CClick%20for%20Latest%20Pricing%20%26%20Promo%20Alerts%E2%80%9D%20%E2%86%92%20I%20clicked%20faster%20than%20my%20mom%20forwards%20fake%20news%20%F0%9F%A4%A3%0AHit%20me%20with%20the%20latest%20price%20%2B%20any%20crazy%20deals%20lah!%0AProject%20I%20want%3A%20";
             
             sites.forEach((site, index) => {
                 const badgeColor = site.list === "Confirmed" ? "bg-blue-100 text-brand-primary border-blue-200" : (site.type === "White Site" ? "bg-purple-100 text-purple-600 border-purple-200" : "bg-yellow-100 text-yellow-700 border-yellow-200");
                 
-                // Key Selling Points HTML
+                // 1. Populate Directory
+                const dirBtn = document.createElement('a');
+                dirBtn.href = `#site-${index}`;
+                dirBtn.className = `flex flex-col items-start p-3 rounded-lg shadow-sm hover:shadow-md transition-all border border-slate-200 bg-white hover:border-brand-primary group`;
+                
+                // Determine color indicator
+                let indicatorColor = "bg-slate-300";
+                if(site.list === "Confirmed") indicatorColor = "bg-blue-500";
+                else if(site.type === "White Site") indicatorColor = "bg-purple-500";
+                else indicatorColor = "bg-yellow-500";
+
+                dirBtn.innerHTML = `
+                    <div class="flex items-center w-full mb-2">
+                        <div class="w-2 h-2 rounded-full ${indicatorColor} mr-2"></div>
+                        <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">${site.list}</span>
+                    </div>
+                    <div class="font-bold text-sm text-slate-700 group-hover:text-brand-primary transition-colors leading-tight">${site.name}</div>
+                `;
+                directoryGrid.appendChild(dirBtn);
+
+
+                // 2. Key Selling Points HTML
                 let keyPointsHTML = '';
                 if (site.keyPoints && site.keyPoints.length > 0) {
                     keyPointsHTML = `
@@ -969,9 +903,16 @@
                 const waLink = `${waBase}${encodeURIComponent(site.name)}`;
 
                 const slideHTML = `
-                <div class="slide">
-                    <div class="content-card p-6 md:p-10 flex flex-col md:flex-row gap-8">
-                        <div class="w-full md:w-1/3 flex flex-col justify-center relative z-20 reveal">
+                <div class="slide" id="site-${index}">
+                    <div class="content-card p-6 md:p-10 flex flex-col md:flex-row gap-8 relative">
+                        <!-- Back Button -->
+                        <div class="absolute top-4 left-4 z-30">
+                            <a href="#directory-slide" class="inline-flex items-center text-xs font-bold text-slate-400 hover:text-brand-primary transition-colors bg-white/80 backdrop-blur-sm px-3 py-1.5 rounded-full border border-slate-200 shadow-sm">
+                                <i class="fas fa-arrow-left mr-2"></i> <span class="slide-btn-back">Back to Directory</span>
+                            </a>
+                        </div>
+
+                        <div class="w-full md:w-1/3 flex flex-col justify-center relative z-20 reveal pt-8 md:pt-0">
                             <div class="inline-block self-start px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider border mb-4 ${badgeColor}">
                                 ${site.list} List • ${site.type}
                             </div>
@@ -1122,7 +1063,7 @@
                 let isCover = index === 0;
                 let isSummary1 = index === 1;
                 let isSummary2 = index === 2;
-                let isExpert = index === 3; // Expert Slide
+                let isDirectory = index === 3; // Directory Slide
                 let isEnd = index === allSlides.length - 1;
 
                 // Default
@@ -1138,7 +1079,7 @@
                     wrapper.style.right = '40px';
                     wrapper.style.opacity = '0.85';
                     slide.appendChild(wrapper);
-                } else if (isSummary1 || isSummary2 || isExpert || isEnd) {
+                } else if (isSummary1 || isSummary2 || isDirectory || isEnd) {
                     wrapper.style.transform = 'scale(0.5) rotate(0deg)';
                     if(isSummary1) {
                         wrapper.style.bottom = '20px';
@@ -1148,13 +1089,12 @@
                         wrapper.style.top = '10px';
                         wrapper.style.right = '10px';
                         wrapper.style.zIndex = '5';
-                    } else if (isExpert) {
-                        // Special handling for expert slide to not block text
+                    } else if (isDirectory) {
                         wrapper.style.bottom = '20px';
                         wrapper.style.right = '20px';
                         wrapper.style.zIndex = '30';
                         slide.appendChild(wrapper);
-                        return; // Skip content-card insertion for this one to keep it separate
+                        return;
                     } else {
                         // End slide
                         wrapper.style.position = 'relative';
