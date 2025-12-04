@@ -429,6 +429,7 @@
                 lbl_immediate: "Nearby New Launches Avail for Immediate Booking",
                 btn_price: "Click for Latest Pricing & Promo",
                 note_price: "Note: Prices shown are Land Price (psf ppr)",
+                key_points: "Key Selling Points",
                 cover_mobile_msg_1: "Built for your phone. Happy browsing!",
                 cover_mobile_msg_2: "(Rotate for optimal viewing for all pages.)",
                 mobile_msg_1: "Built for your phone. Happy browsing!",
@@ -461,6 +462,7 @@
                 lbl_immediate: "附近可立即预订的新楼盘",
                 btn_price: "查看最新价格表",
                 note_price: "注：显示价格为土地价格 (每平方英尺容积率)",
+                key_points: "主要卖点",
                 cover_mobile_msg_1: "专为手机打造。浏览愉快！",
                 cover_mobile_msg_2: "（旋转屏幕以获得最佳观看体验。）",
                 mobile_msg_1: "专为手机打造。浏览愉快！",
@@ -492,12 +494,20 @@
             document.querySelectorAll('.slide-label-immediate').forEach(el => el.innerText = t.lbl_immediate);
             document.querySelectorAll('.slide-label-note').forEach(el => el.innerText = t.note_price);
             document.querySelectorAll('.slide-btn-price').forEach(el => el.innerText = t.btn_price);
+            document.querySelectorAll('.slide-label-keypoints').forEach(el => el.innerText = t.key_points);
         }
 
         document.addEventListener('DOMContentLoaded', function() {
             // 1. GENERATE SITE SLIDES DYNAMICALLY
             const sites = [
                 { name: "Holland Plain", type: "Residential", list: "Confirmed", units: 280, area: "1.57 ha", date: "Feb 2026", img: "holland plain.jpg", color: "blue", 
+                  keyPoints: [
+                      "Part of green Bukit Timah neighbourhood",
+                      "Near Methodist Girls’ School, Holland Green Linear Park, Rail Corridor",
+                      "Well-connected via King Albert Park MRT (Downtown and Cross Island Lines)",
+                      "Tranquil private estates nearby",
+                      "Unit cap at 282 for controlled density"
+                  ],
                   launching: [
                     { name: "Holland Link (Jul 2025)", price: "$1,432" },
                     { name: "Bukit Timah Rd (Nov 2025)", price: "$1,820" },
@@ -510,7 +520,14 @@
                     { name: "Pinetree Hill (Jun 2022)", price: "$1,318", pre: true }
                   ]
                 },
-                { name: "River Valley Green (Parcel C)", annotation: "near Great World MRT", type: "Residential", list: "Confirmed", units: 470, area: "1.15 ha", date: "Apr 2026", img: "river valley green parcal c.jpg", color: "blue", 
+                { name: "River Valley Green (Parcel C)", type: "Residential", list: "Confirmed", units: 470, area: "1.15 ha", date: "Apr 2026", img: "river valley green parcal c.jpg", color: "blue", 
+                  keyPoints: [
+                      "Prime District 9 city fringe",
+                      "Near Great World MRT, Orchard Road, Singapore River parks",
+                      "Lower plot ratio (3.5) reduces risk",
+                      "Appeals to urban buyers with shopping/dining access",
+                      "Carried over from prior list"
+                  ],
                   launching: [
                     { name: "River Modern (Feb 2025)", price: "$1,420" }
                   ],
@@ -520,7 +537,13 @@
                     { name: "Promenade Peak (Aug 2024)", price: "$1,304" }
                   ]
                 },
-                { name: "Peck Hay Road", annotation: "near Newton MRT", type: "Residential", list: "Confirmed", units: 315, area: "0.55 ha", date: "Apr 2026", img: "Peck Hay Road.jpg", color: "blue", 
+                { name: "Peck Hay Road", type: "Residential", list: "Confirmed", units: 315, area: "0.55 ha", date: "Apr 2026", img: "Peck Hay Road.jpg", color: "blue", 
+                  keyPoints: [
+                      "Newton urban village transformation (URA Master Plan 2025)",
+                      "Near Newton MRT, Orchard, Novena healthcare",
+                      "Within 1km of ACS Junior/SJIJ",
+                      "Premium CCR location with strong bidder interest expected"
+                  ],
                   launching: [
                     { name: "Bukit Timah Rd (Nov 2025)", price: "$1,820" }
                   ],
@@ -529,7 +552,14 @@
                      { name: "The Orie (Nov 2023)", price: "$1,360" }
                   ]
                 },
-                { name: "Berlayar Drive", annotation: "Telok Blangah area, Greater Southern Waterfront, near Reflection at Keppel Bay", type: "Residential", list: "Confirmed", units: 415, area: "2.54 ha", date: "May 2026", img: "berlayar drive.jpg", color: "blue", 
+                { name: "Berlayar Drive", type: "Residential", list: "Confirmed", units: 415, area: "2.54 ha", date: "May 2026", img: "berlayar drive.jpg", color: "blue", 
+                  keyPoints: [
+                      "Greater Southern Waterfront location",
+                      "Sea views over Keppel Bay",
+                      "Near Telok Blangah MRT, HarbourFront",
+                      "Part of former Keppel Club redevelopment (10,000 homes total)",
+                      "Central location with waterfront appeal"
+                  ],
                   launching: [
                     { name: "Telok Blangah Rd (Nov 2025)", price: "$1,326" },
                     { name: "Keppel Bay Plot 6 (2025)", price: "N/A" }
@@ -539,8 +569,15 @@
                     { name: "Terra Hill (FH) (Oct 2021)", price: "$1,355", pre: true }
                   ]
                 },
-                { name: "Canberra Drive (EC)", annotation: "Near Canberra MRT", type: "EC", list: "Confirmed", units: 185, area: "1.16 ha", date: "May 2026", img: "canberra drive EC.jpg", color: "blue", 
+                { name: "Canberra Drive (EC)", type: "EC", list: "Confirmed", units: 185, area: "1.16 ha", date: "May 2026", img: "canberra drive EC.jpg", color: "blue", 
                   question: "if a new private new launch and new ec have similar land price, which is better?",
+                  keyPoints: [
+                      "Quieter northern pocket with greenery/waterfront",
+                      "Near Northoaks/Endeavour Primary schools",
+                      "Appeals to upgraders",
+                      "Opportunity for smaller developers",
+                      "Bus to Sembawang MRT"
+                  ],
                   launching: [
                     { name: "Sembawang Rd EC (Sep 2025)", price: "$692" },
                     { name: "Woodlands Dr 17 EC (Aug 2025)", price: "$782" },
@@ -551,7 +588,14 @@
                     { name: "Norwood Grand (Sep 2023)", price: "$904", nonEC: true }
                   ]
                 },
-                { name: "New Upper Changi Road", annotation: "Near Bedok MRT", type: "Residential", list: "Confirmed", units: 1040, area: "3.16 ha", date: "May 2026", img: "New Upper Changi Road.jpg", color: "blue", 
+                { name: "New Upper Changi Road", type: "Residential", list: "Confirmed", units: 1040, area: "3.16 ha", date: "May 2026", img: "New Upper Changi Road.jpg", color: "blue", 
+                  keyPoints: [
+                      "Mature Bedok heartland",
+                      "Walking distance to Bedok MRT, mall, hawker centre, library",
+                      "Near schools like Opera Estate Primary",
+                      "Strong upgrader demand from HDB estates",
+                      "Large site likely for consortiums"
+                  ],
                   launching: [
                     { name: "Bedok Rise (Nov 2025)", price: "$1,330" },
                     { name: "Bayshore Road (Mar 2025)", price: "$1,388" },
@@ -564,7 +608,15 @@
                     { name: "Parktown Residences (Jun 2023)", price: "$885" }
                   ]
                 },
-                { name: "Lorong Puntong", annotation: "Near Bright Hill MRT", type: "Residential", list: "Confirmed", units: 140, area: "0.43 ha", date: "Jun 2026", img: "Lorong Puntong (Sin ming).jpg", color: "blue", 
+                { name: "Lorong Puntong", type: "Residential", list: "Confirmed", units: 140, area: "0.43 ha", date: "Jun 2026", img: "Lorong Puntong (Sin ming).jpg", color: "blue", 
+                  keyPoints: [
+                      "Near Bright Hill MRT (Cross Island Line)",
+                      "Opposite Ai Tong School",
+                      "Private estate bordering Bishan/Ang Mo Kio",
+                      "Appeals to families",
+                      "Small size suits smaller developers",
+                      "Upgrader potential from Sin Ming"
+                  ],
                   launching: [
                     { name: "Former Thomson View (Nov 2024)", price: "$1,178" },
                     { name: "Lentor Gardens GLS (Apr 2025)", price: "$920" },
@@ -590,6 +642,14 @@
                   ]
                 },
                 { name: "Bayshore Drive", type: "Mixed Use", list: "Confirmed", units: 1280, area: "5.74 ha", date: "Mar 2026", img: "bayshore drive.jpg", color: "blue", 
+                  keyPoints: [
+                      "Integrated with Bedok South MRT",
+                      "Near East Coast Park, Temasek Primary",
+                      "Mixed-use with bus interchange",
+                      "Largest site in programme",
+                      "Potential sea/landed views",
+                      "High capital likely needs partnerships"
+                  ],
                   launching: [
                     { name: "Bayshore Road (Mar 2025)", price: "$1,388" },
                     { name: "Bedok Rise (Nov 2025)", price: "$1,330" }
@@ -602,6 +662,12 @@
                   ]
                 },
                 { name: "Marina Gardens Lane", type: "Residential", list: "Reserve", units: 390, area: "0.60 ha", date: "Available", img: "Marina Gardens Lane.jpg", color: "yellow", 
+                  keyPoints: [
+                      "Marina South area",
+                      "Retail cap at 150 sq m",
+                      "Carried over",
+                      "Supports mixed urban development"
+                  ],
                   launching: [
                     { name: "Newport Residence (FH)", price: "Redevelopment" }
                   ],
@@ -610,6 +676,11 @@
                   ]
                 },
                 { name: "Media Circle", type: "Residential", list: "Reserve", units: 520, area: "0.57 ha", date: "Available", img: "Media Circle.jpg", color: "yellow", 
+                  keyPoints: [
+                      "Predominantly long-stay serviced apartments",
+                      "Retail cap 400 sq m",
+                      "Media/tech hub proximity"
+                  ],
                   launching: [
                     { name: "Media Circle Parcel A (Mar 2025)", price: "$1,037" }
                   ],
@@ -621,6 +692,10 @@
                   ]
                 },
                 { name: "Media Circle (Parcel B)", type: "Residential", list: "Reserve", units: 500, area: "1.00 ha", date: "Available", img: "Media Circle (Parcel B).jpg", color: "yellow", 
+                  keyPoints: [
+                      "Retail cap 400 sq m",
+                      "Complements media district growth"
+                  ],
                   launching: [
                     { name: "Media Circle Parcel A (Mar 2025)", price: "$1,037" }
                   ],
@@ -632,6 +707,11 @@
                   ]
                 },
                 { name: "Cross Street", type: "Residential", list: "Reserve", units: 315, area: "0.23 ha", date: "Available", img: "Cross Street.jpg", color: "yellow", 
+                  keyPoints: [
+                      "Long-stay serviced apartments",
+                      "Min commercial 500 sq m",
+                      "CBD fringe accessibility"
+                  ],
                   launching: [
                     { name: "Newport Residences (FH)", price: "Redevelopment" }
                   ],
@@ -642,6 +722,11 @@
                   ]
                 },
                 { name: "Morrison Lane", type: "Residential", list: "Reserve", units: 200, area: "0.66 ha", date: "Feb 2026", img: "Morrison Lane.jpg", color: "yellow", 
+                  keyPoints: [
+                      "New site",
+                      "Min retail 750 sq m + 500 sq m childcare",
+                      "Urban residential appeal"
+                  ],
                   launching: [
                     { name: "River Modern (Feb 2025)", price: "$1,420" }
                   ],
@@ -653,7 +738,12 @@
                     { name: "Promenade Peak (Aug 2024)", price: "$1,304" }
                   ]
                 },
-                { name: "Kitchener Link", annotation: "Near Farrer Park MRT", type: "Residential", list: "Reserve", units: 135, area: "0.39 ha", date: "Jun 2026", img: "Kitchener Link.jpg", color: "yellow", 
+                { name: "Kitchener Link", type: "Residential", list: "Reserve", units: 135, area: "0.39 ha", date: "Jun 2026", img: "Kitchener Link.jpg", color: "yellow", 
+                  keyPoints: [
+                      "New site",
+                      "Reduced serviced apartments quota",
+                      "Central location near amenities"
+                  ],
                   launching: [
                     { name: "Dorset Road (Oct 2025)", price: "$1,338" }
                   ],
@@ -661,14 +751,23 @@
                     { name: "The Arcady (Jul 2022)", price: "$1,313", pre: true }
                   ]
                 },
-                { name: "Telok Ayer Street", annotation: "Near Telok Ayer MRT", type: "Hotel / Residential", list: "Reserve", units: 135, area: "0.42 ha", date: "Dec 2025", img: "Telok Ayer Street.jpg", color: "yellow", 
+                { name: "Telok Ayer Street", type: "Hotel / Residential", list: "Reserve", units: 135, area: "0.42 ha", date: "Dec 2025", img: "Telok Ayer Street.jpg", color: "yellow", 
+                  keyPoints: [
+                      "Min long-stay serviced apartments 6,200 sq m",
+                      "Carried over",
+                      "CBD heritage vibe"
+                  ],
                   launching: [],
                   immediate: [
                     { name: "W Residences (Sep 2021)", price: "$1,379", pre: true },
                     { name: "One Bernam (Sep 2019)", price: "$1,463", pre: true }
                   ]
                 },
-                { name: "Marina Gardens Crescent", annotation: "Near Marina South MRT (U/C)", type: "White Site", list: "Reserve", units: 775, area: "1.73 ha", date: "Available", img: "Marina Gardens White Site.jpg", color: "purple", 
+                { name: "Marina Gardens Crescent", type: "White Site", list: "Reserve", units: 775, area: "1.73 ha", date: "Available", img: "Marina Gardens White Site.jpg", color: "purple", 
+                  keyPoints: [
+                      "Retail cap 6,000 sq m + min 500 sq m childcare",
+                      "Mixed-use in growing Marina area"
+                  ],
                   launching: [
                     { name: "Marina Gdns Ln 1 (Jun 2023)", price: "$1,402" }
                   ],
@@ -676,7 +775,11 @@
                     { name: "W Residences (Sep 2021)", price: "$1,379", pre: true }
                   ]
                 },
-                { name: "Woodlands Avenue 2", annotation: "Near Woodlands MRT", type: "White Site", list: "Reserve", units: 440, area: "2.75 ha", date: "Available", img: "woodlands avenue 2.jpg", color: "purple", 
+                { name: "Woodlands Avenue 2", type: "White Site", list: "Reserve", units: 440, area: "2.75 ha", date: "Available", img: "woodlands avenue 2.jpg", color: "purple", 
+                  keyPoints: [
+                      "Min office 45,000 sq m, retail cap 33,000 sq m",
+                      "Supports northern decentralization"
+                  ],
                   launching: [
                     { name: "Woodlands Dr 17 EC (Aug 2025)", price: "$782" }
                   ],
@@ -684,7 +787,14 @@
                     { name: "Norwood Grand (Sep 2023)", price: "$904" }
                   ]
                 },
-                { name: "Town Hall Link", annotation: "Near Jurong East MRT", type: "White Site", list: "Reserve", units: 1200, area: "3.72 ha", date: "Mar 2026", img: "town hall link.jpg", color: "purple", 
+                { name: "Town Hall Link", type: "White Site", list: "Reserve", units: 1200, area: "3.72 ha", date: "Mar 2026", img: "town hall link.jpg", color: "purple", 
+                  keyPoints: [
+                      "New JLD carve-out",
+                      "Min office 40,000 sq m + 800 sq m childcare",
+                      "District cooling/waste systems",
+                      "JRL/CRL connectivity by 2028/2032",
+                      "Reduced risk with govt infrastructure support"
+                  ],
                   launching: [
                     { name: "Lakeside Drive (Jun 2025)", price: "$1,132" }
                   ],
@@ -702,6 +812,18 @@
             sites.forEach((site, index) => {
                 const badgeColor = site.list === "Confirmed" ? "bg-blue-100 text-brand-primary border-blue-200" : (site.type === "White Site" ? "bg-purple-100 text-purple-600 border-purple-200" : "bg-yellow-100 text-yellow-700 border-yellow-200");
                 
+                // Key Selling Points HTML
+                let keyPointsHTML = '';
+                if (site.keyPoints && site.keyPoints.length > 0) {
+                    keyPointsHTML = `
+                    <div class="mt-4 pt-4 border-t border-slate-200 reveal delay-100">
+                        <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-2 slide-label-keypoints">Key Selling Points</h4>
+                        <ul class="text-xs text-slate-600 list-disc pl-4 space-y-1">
+                            ${site.keyPoints.map(point => `<li>${point}</li>`).join('')}
+                        </ul>
+                    </div>`;
+                }
+
                 const launchingHTML = site.launching && site.launching.length > 0 
                     ? site.launching.map(c => `
                         <div class="bg-slate-50 p-2 rounded border border-slate-200 pre-badge-container">
@@ -734,7 +856,6 @@
                             </div>
                             <h2 class="font-display text-3xl md:text-4xl text-brand-dark mb-6 leading-tight">
                                 ${site.name}
-                                ${site.annotation ? `<span class="block text-lg md:text-xl text-brand-secondary font-sans font-bold mt-1">${site.annotation}</span>` : ''}
                             </h2>
                             <div class="space-y-3">
                                 <div class="flex items-center p-3 bg-white rounded-lg shadow-sm border-l-4 border-brand-primary">
@@ -760,6 +881,8 @@
                                 </div>
                             </div>
                             
+                            ${keyPointsHTML}
+
                             <div class="mt-4 pt-4 border-t border-slate-200 reveal delay-100">
                                 <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-2 slide-label-launching">Nearby Land Trans. (PSF PPR) - <span class="text-red-600 bg-red-50 px-1 rounded border border-red-200">LAUNCHING SOON</span></h4>
                                 <div class="grid grid-cols-2 gap-3">
