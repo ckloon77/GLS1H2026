@@ -521,6 +521,10 @@
             document.querySelectorAll('.slide-btn-price').forEach(el => el.innerText = t.btn_price);
             document.querySelectorAll('.slide-label-keypoints').forEach(el => el.innerText = t.key_points);
             document.querySelectorAll('.slide-btn-back').forEach(el => el.innerText = t.btn_back_directory);
+
+            // Toggle Key Points Lists Visibility
+            document.querySelectorAll('.key-points-en').forEach(el => el.classList.toggle('hidden', currentLang === 'zh'));
+            document.querySelectorAll('.key-points-zh').forEach(el => el.classList.toggle('hidden', currentLang === 'en'));
         }
 
         document.addEventListener('DOMContentLoaded', function() {
@@ -533,6 +537,13 @@
                       "Well-connected via King Albert Park MRT (Downtown and Cross Island Lines)",
                       "Tranquil private estates nearby",
                       "Unit cap at 282 for controlled density"
+                  ],
+                  keyPointsZh: [
+                      "位于绿意盎然的武吉知马社区",
+                      "靠近美以美女校、荷兰格林直线公园、铁道走廊",
+                      "连接阿尔柏王园地铁站（滨海市区线和跨岛线），交通便利",
+                      "毗邻宁静的私人住宅区",
+                      "单位上限为 282 个，密度受控"
                   ],
                   launching: [
                     { name: "Holland Link (Jul 2025)", price: "$1,432" },
@@ -554,6 +565,13 @@
                       "Appeals to urban buyers with shopping/dining access",
                       "Carried over from prior list"
                   ],
+                  keyPointsZh: [
+                      "第9区黄金地段，城市边缘",
+                      "靠近大世界地铁站、乌节路、新加坡河公园",
+                      "较低的容积率 (3.5) 降低风险",
+                      "靠近购物/餐饮场所，吸引城市买家",
+                      "从之前的名单中结转"
+                  ],
                   launching: [
                     { name: "River Modern (Feb 2025)", price: "$1,420" }
                   ],
@@ -570,6 +588,12 @@
                       "Within 1km of ACS Junior/SJIJ",
                       "Premium CCR location with strong bidder interest expected"
                   ],
+                  keyPointsZh: [
+                      "纽顿城中村改造（市区重建局2025年总体规划）",
+                      "靠近纽顿地铁站、乌节路、诺维娜医疗中心",
+                      "英华小学（ACS Junior）/圣若瑟书院附小（SJIJ）1公里范围内",
+                      "核心中央区（CCR）优质地段，预计竞标激烈"
+                  ],
                   launching: [
                     { name: "Bukit Timah Rd (Nov 2025)", price: "$1,820" }
                   ],
@@ -585,6 +609,13 @@
                       "Near Telok Blangah MRT, HarbourFront",
                       "Part of former Keppel Club redevelopment (10,000 homes total)",
                       "Central location with waterfront appeal"
+                  ],
+                  keyPointsZh: [
+                      "位于南部濒水区",
+                      "享有吉宝湾海景",
+                      "靠近直落布兰雅地铁站、港湾",
+                      "前吉宝俱乐部重建计划的一部分（总计 10,000 套住宅）",
+                      "具有滨水吸引力的中心位置"
                   ],
                   launching: [
                     { name: "Telok Blangah Rd (Nov 2025)", price: "$1,326" },
@@ -604,6 +635,13 @@
                       "Opportunity for smaller developers",
                       "Bus to Sembawang MRT"
                   ],
+                  keyPointsZh: [
+                      "北部宁静区域，拥有绿地/滨水景观",
+                      "靠近北诺小学/康德小学",
+                      "吸引组屋提升者",
+                      "小型开发商的机会",
+                      "有巴士通往三巴旺地铁站"
+                  ],
                   launching: [
                     { name: "Sembawang Rd EC (Sep 2025)", price: "$692" },
                     { name: "Woodlands Dr 17 EC (Aug 2025)", price: "$782" },
@@ -621,6 +659,13 @@
                       "Near schools like Opera Estate Primary",
                       "Strong upgrader demand from HDB estates",
                       "Large site likely for consortiums"
+                  ],
+                  keyPointsZh: [
+                      "成熟的勿洛中心地带",
+                      "步行可达勿洛地铁站、商场、熟食中心、图书馆",
+                      "靠近歌剧院小学等学校",
+                      "来自组屋区的强劲提升需求",
+                      "大型地块，可能吸引财团"
                   ],
                   launching: [
                     { name: "Bedok Rise (Nov 2025)", price: "$1,330" },
@@ -642,6 +687,14 @@
                       "Appeals to families",
                       "Small size suits smaller developers",
                       "Upgrader potential from Sin Ming"
+                  ],
+                  keyPointsZh: [
+                      "靠近光明山地铁站（跨岛线）",
+                      "爱同学校对面",
+                      "毗邻碧山/宏茂桥的私人住宅区",
+                      "吸引家庭买家",
+                      "小地块适合小型开发商",
+                      "来自新民区域的提升潜力"
                   ],
                   launching: [
                     { name: "Former Thomson View (Nov 2024)", price: "$1,178" },
@@ -665,6 +718,13 @@
                       "Opportunity for smaller developers",
                       "Bus to Sembawang MRT"
                   ],
+                  keyPointsZh: [
+                      "北部宁静区域，拥有绿地/滨水景观",
+                      "靠近北诺小学/康德小学",
+                      "吸引组屋提升者",
+                      "小型开发商的机会",
+                      "有巴士通往三巴旺地铁站"
+                  ],
                   launching: [
                     { name: "Sembawang Rd EC (Sep 2025)", price: "$692" },
                     { name: "Woodlands Dr 17 EC (Aug 2025)", price: "$782" }
@@ -682,6 +742,14 @@
                       "Largest site in programme",
                       "Potential sea/landed views",
                       "High capital likely needs partnerships"
+                  ],
+                  keyPointsZh: [
+                      "与勿洛南地铁站整合",
+                      "靠近东海岸公园、淡马锡小学",
+                      "混合用途，设有巴士转换站",
+                      "计划中最大的地块",
+                      "潜在的海景/有地住宅景观",
+                      "高资本需求，可能需要合作开发"
                   ],
                   launching: [
                     { name: "Bayshore Road (Mar 2025)", price: "$1,388" },
@@ -701,6 +769,12 @@
                       "Carried over",
                       "Supports mixed urban development"
                   ],
+                  keyPointsZh: [
+                      "滨海南区",
+                      "零售面积上限 150 平方米",
+                      "从之前的名单中结转",
+                      "支持混合城市发展"
+                  ],
                   launching: [
                     { name: "Newport Residence (FH)", price: "Redevelopment" },
                     { name: "Marina Square (Dec 2025)", price: "Redevelopment" }
@@ -715,20 +789,28 @@
                       "Retail cap 400 sq m",
                       "Media/tech hub proximity"
                   ],
+                  keyPointsZh: [
+                      "主要用于长租服务式公寓",
+                      "零售面积上限 400 平方米",
+                      "靠近媒体/科技中心"
+                  ],
                   launching: [
                     { name: "Media Circle Parcel A (Mar 2025)", price: "$1,037" }
                   ],
                   immediate: [
                     { name: "Bloomsbury Residences (Jan 2024)", price: "$1,191" },
                     { name: "LyndenWoods", price: "Redevelopment" },
-                    { name: "Blossoms By The Park (Sep 2021)", price: "$1,246", pre: true },
-                    { name: "The Hill @ One-North (Sep 2021)", price: "$1,210", pre: true }
+                    { name: "Blossoms By The Park (Sep 2021)", price: "$1,246", pre: true }
                   ]
                 },
                 { name: "Media Circle (Parcel B)", type: "Residential", list: "Reserve", units: 500, area: "1.00 ha", date: "Available", img: "Media Circle (Parcel B).jpg", color: "yellow", 
                   keyPoints: [
                       "Retail cap 400 sq m",
                       "Complements media district growth"
+                  ],
+                  keyPointsZh: [
+                      "零售面积上限 400 平方米",
+                      "配合媒体区增长"
                   ],
                   launching: [
                     { name: "Media Circle Parcel A (Mar 2025)", price: "$1,037" }
@@ -746,6 +828,11 @@
                       "Min commercial 500 sq m",
                       "CBD fringe accessibility"
                   ],
+                  keyPointsZh: [
+                      "长租服务式公寓",
+                      "最小商业面积 500 平方米",
+                      "CBD 边缘，交通便利"
+                  ],
                   launching: [
                     { name: "Newport Residences (FH)", price: "Redevelopment" }
                   ],
@@ -760,6 +847,11 @@
                       "New site",
                       "Min retail 750 sq m + 500 sq m childcare",
                       "Urban residential appeal"
+                  ],
+                  keyPointsZh: [
+                      "新地块",
+                      "最小零售面积 750 平方米 + 500 平方米托儿所",
+                      "城市住宅吸引力"
                   ],
                   launching: [
                     { name: "River Modern (Feb 2025)", price: "$1,420" }
@@ -778,6 +870,11 @@
                       "Reduced serviced apartments quota",
                       "Central location near amenities"
                   ],
+                  keyPointsZh: [
+                      "新地块",
+                      "减少服务式公寓配额",
+                      "中心位置，靠近设施"
+                  ],
                   launching: [
                     { name: "Dorset Road (Oct 2025)", price: "$1,338" }
                   ],
@@ -791,6 +888,11 @@
                       "Carried over",
                       "CBD heritage vibe"
                   ],
+                  keyPointsZh: [
+                      "最小长租服务式公寓面积 6,200 平方米",
+                      "从之前的名单中结转",
+                      "CBD 传统氛围"
+                  ],
                   launching: [],
                   immediate: [
                     { name: "W Residences (Sep 2021)", price: "$1,379", pre: true },
@@ -801,6 +903,10 @@
                   keyPoints: [
                       "Retail cap 6,000 sq m + min 500 sq m childcare",
                       "Mixed-use in growing Marina area"
+                  ],
+                  keyPointsZh: [
+                      "零售面积上限 6,000 平方米 + 最小 500 平方米托儿所",
+                      "位于增长中的滨海区，混合用途"
                   ],
                   launching: [
                     { name: "Marina Gdns Ln 1 (Jun 2023)", price: "$1,402" },
@@ -814,6 +920,10 @@
                   keyPoints: [
                       "Min office 45,000 sq m, retail cap 33,000 sq m",
                       "Supports northern decentralization"
+                  ],
+                  keyPointsZh: [
+                      "最小办公面积 45,000 平方米，零售上限 33,000 平方米",
+                      "支持北部去中心化"
                   ],
                   launching: [
                     { name: "Woodlands Dr 17 EC (Aug 2025)", price: "$782" }
@@ -829,6 +939,13 @@
                       "District cooling/waste systems",
                       "JRL/CRL connectivity by 2028/2032",
                       "Reduced risk with govt infrastructure support"
+                  ],
+                  keyPointsZh: [
+                      "新的 JLD 地块",
+                      "最小办公面积 40,000 平方米 + 800 平方米托儿所",
+                      "区域供冷/废物系统",
+                      "2028/2032 年连接裕廊区域线/跨岛线",
+                      "政府基础设施支持降低风险"
                   ],
                   launching: [
                     { name: "Lakeside Drive (Jun 2025)", price: "$1,132" }
@@ -869,14 +986,17 @@
                 directoryGrid.appendChild(dirBtn);
 
 
-                // 2. Key Selling Points HTML
+                // 2. Key Selling Points HTML (Dual Lists)
                 let keyPointsHTML = '';
                 if (site.keyPoints && site.keyPoints.length > 0) {
                     keyPointsHTML = `
                     <div class="mt-4 pt-4 border-t border-slate-200 reveal delay-100">
                         <h4 class="text-[10px] font-bold text-slate-400 uppercase mb-2 slide-label-keypoints">Key Selling Points</h4>
-                        <ul class="text-xs text-slate-600 list-disc pl-4 space-y-1">
+                        <ul class="text-xs text-slate-600 list-disc pl-4 space-y-1 key-points-en">
                             ${site.keyPoints.map(point => `<li>${point}</li>`).join('')}
+                        </ul>
+                        <ul class="text-xs text-slate-600 list-disc pl-4 space-y-1 key-points-zh hidden">
+                            ${(site.keyPointsZh || []).map(point => `<li>${point}</li>`).join('')}
                         </ul>
                     </div>`;
                 }
